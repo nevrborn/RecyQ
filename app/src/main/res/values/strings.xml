@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">RecyQ</string>
+
+    // FIREBASE
+    <string name="auth_failed">Authenticatie is mislukt</string>
+    <string name="auth_user_created">Welkom bij RecyQ!</string>
+    <string name="auth_not_all_fields_filled">Niet alle velden zijn gevuld</string>
+    <string name="sign_in_succesfull">Je bent ingelogd!</string>
+    <string name="sign_out_succesfull">Je bent uitgelogd!</string>
+
+    // LOGIN SCREEN
+    <string name="login">Login</string>
+    <string name="registerButton">Registreer</string>
+    <string name="forgotPassword">Wachtwoord vergeten?</string>
+    <string name="facebook_app_id">1588467261225074</string>
+    <string name="fb_login_protocol_scheme">f9b90227af99ae80d2d8e803040d2dbb</string>
+
+    // REGISTRATION SCREEN
+    <string name="name">Voornaam</string>
+    <string name="lastName">Achternaam</string>
+    <string name="address">Adres en huisnummer</string>
+    <string name="postcode">Postcode</string>
+    <string name="city">Woonplaats</string>
+    <string name="phonenumber">Telefoonnummer</string>
+    <string name="addedByUser">E-mailadres</string>
+    <string name="password">Wachtwoord</string>
+    <string name="wasteLocation">Selecteer een locatie</string>
+
+    // STATS SCREEN
+    <string name="stats_recycled">recycled > %1$.1f KG</string>
+    <string name="stats_c02_saved">Co2 bespaard > %1$.1f KG</string>
+    <string name="stats_kg_">KILOGRAM</string>
+    <string name="stats_delivered">&#62;Ingeleverd</string>
+    <string name="stats_tokens">TOKEN</string>
+    <string name="stats_separation">&#62;&#62;&#62;&#62;&#62;&#62;</string>
+    <string name="stats_textile_title">TEXTILE</string>
+    <string name="stats_paper_title">PAPIER</string>
+    <string name="stats_pmd_title">PMD</string>
+    <string name="stats_bio_title">BIO</string>
+    <string name="stats_eWaste_title">E-WASTE</string>
+
+    // COMMUNITY SCREEN
+    <string name="community_whatAreWeDoing">Wat gaan we doen?</string>
+    <string name="community_whoIsOnTop">Wie staat er bovenaan?</string>
+    <string name="community_communityPartners">Community Partners</string>
+    <string name="community_totalCO2Saved">Totaal\n%1$.2fkg\nco2 bespaard</string>
+    <string name="community_totalKGRecycled">Totaal\n%1$.2fkg\ngerecycled</string>
+    <string name="community_totalM3cola">Ziet eruit als\n%1$.2fm3 COLA</string>
+
+</resources>

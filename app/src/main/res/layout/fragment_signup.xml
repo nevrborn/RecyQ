@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:weightSum="1">
+
+    <ImageView
+        android:id="@+id/registration_imageView_icon"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/recyq_icon_green"
+        />
+
+    <EditText
+        android:id="@+id/registration_editText_firstName"
+        style="@style/editText_grey"
+        android:hint="@string/name"/>
+
+    <EditText
+        android:id="@+id/registration_editText_lastName"
+        style="@style/editText_grey"
+        android:hint="@string/lastName"/>
+
+    <EditText
+        android:id="@+id/registration_editText_address"
+        style="@style/editText_grey"
+        android:hint="@string/address"/>
+
+    <EditText
+        android:id="@+id/registration_editText_postcode"
+        style="@style/editText_grey"
+        android:hint="@string/postcode"/>
+
+    <EditText
+        android:id="@+id/registration_editText_city"
+        style="@style/editText_grey"
+        android:hint="@string/city"/>
+
+    <EditText
+        android:id="@+id/registration_editText_phonenumber"
+        android:inputType="phone"
+        style="@style/editText_grey"
+        android:hint="@string/phonenumber"/>
+
+    <EditText
+        android:id="@+id/registration_editText_email"
+        android:inputType="textEmailAddress"
+        style="@style/editText_grey"
+        android:hint="@string/addedByUser"/>
+
+    <EditText
+        android:id="@+id/registration_editText_password"
+        android:inputType="textVisiblePassword"
+        style="@style/editText_grey"
+        android:hint="@string/password"/>
+
+    <Spinner
+        android:id="@+id/registration_spinner_wasteLocation"
+        style="@style/editText_grey"
+        android:hint="@string/wasteLocation"/>
+
+    <Button
+        android:id="@+id/registration_button"
+        style="@style/editText_grey"
+        android:text="@string/registerButton"
+        android:textColor="@color/colorGreen"
+        android:layout_marginTop="15dp"
+        />
+
+</LinearLayout>

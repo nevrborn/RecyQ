@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:weightSum="1"
+              android:background="@color/com_facebook_blue"
+              android:padding="16dp">
+    
+    <TextView
+        android:id="@+id/stats_textview_textile_title"
+        android:layout_weight="0.4"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:text="@string/stats_textile_title"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textColor="@android:color/white"/>
+    
+    <LinearLayout
+        android:layout_weight="0.6"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/stats_textview_recycled"
+            android:layout_weight="0.5"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="@string/stats_recycled"
+            android:textColor="@android:color/white"
+            android:padding="8dp"/>
+
+        <TextView
+            android:id="@+id/stats_textview_co2_saved"
+            android:layout_weight="0.5"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="@string/stats_c02_saved"
+            android:textColor="@android:color/white"
+            android:padding="8dp"/>
+
+    </LinearLayout>
+    
+    
+
+</LinearLayout>

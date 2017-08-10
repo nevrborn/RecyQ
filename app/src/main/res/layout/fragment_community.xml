@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="18dp">
+
+        <Button
+            android:id="@+id/community_button_partners"
+            style="@style/button_grey"
+            android:layout_weight="0.6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:text="@string/community_communityPartners"/>
+
+        <Button
+            android:id="@+id/community_button_whoISOnTop"
+            style="@style/button_grey"
+            android:layout_weight="0.6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:text="@string/community_whoIsOnTop"/>
+
+        <Button
+            android:id="@+id/community_button_whatAreWeDoing"
+            style="@style/button_grey"
+            android:layout_weight="0.6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:text="@string/community_whatAreWeDoing"/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="37dp"
+        android:textAlignment="center"
+        android:background="@color/colorRed"
+        android:textColor="@android:color/white"
+        android:padding="15dp"
+        android:lineSpacingExtra="5dp"
+        android:text="@string/community_totalCO2Saved"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="56dp"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="61dp"
+        android:textAlignment="center"
+        android:background="@color/colorYellow"
+        android:textColor="@android:color/white"
+        android:padding="15dp"
+        android:lineSpacingExtra="5dp"
+        android:text="@string/community_totalKGRecycled"
+        android:layout_marginEnd="24dp"
+        android:layout_alignTop="@+id/textView"
+        android:layout_alignParentEnd="true"/>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:textAlignment="center"
+        android:background="@color/colorLightBlue"
+        android:textColor="@android:color/white"
+        android:padding="15dp"
+        android:lineSpacingExtra="5dp"
+        android:text="@string/community_totalM3cola"
+        android:layout_below="@+id/textView2"
+        android:layout_alignStart="@+id/button3"/>
+</RelativeLayout>

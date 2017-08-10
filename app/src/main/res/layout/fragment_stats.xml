@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:layout_marginTop="5dp"
+            android:gravity="center">
+
+            <LinearLayout
+                android:id="@+id/stats_totalKGDelivered_linearview"
+                style="@style/button_grey"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/stats_kg_delivered"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0.0"
+                    android:textSize="20sp"
+                    android:gravity="center_horizontal"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stats_kg_"
+                    android:textSize="20sp"
+                    android:gravity="center_horizontal"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stats_delivered"
+                    android:textSize="20sp"
+                    android:gravity="center_horizontal"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/stats_tokens_linearview"
+                style="@style/button_grey"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/stats_tokens"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="20sp"
+                    android:gravity="center_horizontal"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stats_tokens"
+                    android:textSize="20sp"
+                    android:gravity="center_horizontal"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stats_separation"
+                    android:textSize="20sp"
+                    android:gravity="center_horizontal"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                          android:id="@+id/stats_textile_layout"
+                          android:orientation="horizontal"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:weightSum="1"
+                          android:background="@color/colorRed"
+                          android:padding="16dp"
+                          android:layout_marginTop="8dp"
+                          android:layout_marginBottom="8dp"
+                          android:layout_marginLeft="10dp"
+                          android:layout_marginRight="10dp"
+                          android:paddingBottom="5dp">
+
+                <TextView
+                    android:id="@+id/stats_textview_textile_title"
+                    android:layout_weight="0.4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/stats_textile_title"
+                    android:gravity="center_vertical"
+                    android:textSize="30sp"
+                    android:textColor="@android:color/white"/>
+
+                <LinearLayout
+                    android:layout_weight="0.6"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/stats_textile_recycled"
+                        android:layout_weight="0.5"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:text="@string/stats_recycled"
+                        android:textColor="@android:color/white"
+                        android:padding="8dp"/>
+
+                    <TextView
+                        android:id="@+id/stats_textile_co2_saved"
+                        android:layout_weight="0.5"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:text="@string/stats_c02_saved"
+                        android:textColor="@android:color/white"
+                        android:padding="8dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                          android:id="@+id/stats_paper_layout"
+                          android:orientation="horizontal"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:weightSum="1"
+                          android:background="@color/colorLightBlue"
+                          android:padding="16dp"
+                          android:layout_marginTop="8dp"
+                          android:layout_marginBottom="8dp"
+                          android:layout_marginLeft="10dp"
+                          android:layout_marginRight="10dp"
+                          android:paddingBottom="5dp">
+
+                <TextView
+                    android:id="@+id/stats_textview_paper_title"
+                    android:layout_weight="0.4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/stats_paper_title"
+                    android:gravity="center_vertical"
+                    android:textSize="30sp"
+                    android:textColor="@android:color/white"/>
+
+                <LinearLayout
+                    android:layout_weight="0.6"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/stats_paper_recycled"
+                        android:layout_weight="0.5"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:text="@string/stats_recycled"
+                        android:textColor="@android:color/white"
+                        android:padding="8dp"/>
+
+                    <TextView
+                        android:id="@+id/stats_paper_co2_saved"
+                        android:layout_weight="0.5"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:text="@string/stats_c02_saved"
+                        android:textColor="@android:color/white"
+                        android:padding="8dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                          android:id="@+id/stats_pmd_layout"
+                          android:orientation="horizontal"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:weightSum="1"
+                          android:background="@color/colorYellow"
+                          android:padding="16dp"
+                          android:layout_marginTop="8dp"
+                          android:layout_marginBottom="8dp"
+                          android:layout_marginLeft="10dp"
+                          android:layout_marginRight="10dp"
+                          android:paddingBottom="5dp">
+
+                <TextView
+                    android:id="@+id/stats_textview_pmd_title"
+                    android:layout_weight="0.4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/stats_pmd_title"
+                    android:gravity="center_vertical"
+                    android:textSize="30sp"
+                    android:textColor="@android:color/white"/>
+
+                <LinearLayout
+                    android:layout_weight="0.6"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/stats_pmd_recycled"
+                        android:layout_weight="0.5"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:text="@string/stats_recycled"
+                        android:textColor="@android:color/white"
+                        android:padding="8dp"/>
+
+                    <TextView
+                        android:id="@+id/stats_pmd_co2_saved"
+                        android:layout_weight="0.5"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:text="@string/stats_c02_saved"
+                        android:textColor="@android:color/white"
+                        android:padding="8dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                          android:id="@+id/stats_bio_layout"
+                          android:orientation="horizontal"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:weightSum="1"
+                          android:background="@color/colorGreen"
+                          android:padding="16dp"
+                          android:layout_marginTop="8dp"
+                          android:layout_marginBottom="8dp"
+                          android:layout_marginLeft="10dp"
+                          android:layout_marginRight="10dp"
+                          android:paddingBottom="5dp">
+
+                <TextView
+                    android:id="@+id/stats_textview_bio_title"
+                    android:layout_weight="0.4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/stats_bio_title"
+                    android:gravity="center_vertical"
+                    android:textSize="30sp"
+                    android:textColor="@android:color/white"/>
+
+                <LinearLayout
+                    android:layout_weight="0.6"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/stats_bio_recycled"
+                        android:layout_weight="0.5"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:text="@string/stats_recycled"
+                        android:textColor="@android:color/white"
+                        android:padding="8dp"/>
+
+                    <TextView
+                        android:id="@+id/stats_bio_co2_saved"
+                        android:layout_weight="0.5"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:text="@string/stats_c02_saved"
+                        android:textColor="@android:color/white"
+                        android:padding="8dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                          android:id="@+id/stats_eWaste_layout"
+                          android:orientation="horizontal"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:weightSum="1"
+                          android:background="@color/colorGrey"
+                          android:padding="16dp"
+                          android:layout_marginTop="8dp"
+                          android:layout_marginBottom="8dp"
+                          android:layout_marginLeft="10dp"
+                          android:layout_marginRight="10dp"
+                          android:paddingBottom="5dp">
+
+                <TextView
+                    android:id="@+id/stats_textview_eWaste_title"
+                    android:layout_weight="0.4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/stats_eWaste_title"
+                    android:gravity="center_vertical"
+                    android:textSize="30sp"
+                    android:textColor="@android:color/white"/>
+
+                <LinearLayout
+                    android:layout_weight="0.6"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/stats_eWaste_recycled"
+                        android:layout_weight="0.5"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:text="@string/stats_recycled"
+                        android:textColor="@android:color/white"
+                        android:padding="8dp"/>
+
+                    <TextView
+                        android:id="@+id/stats_eWaste_co2_saved"
+                        android:layout_weight="0.5"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:text="@string/stats_c02_saved"
+                        android:textColor="@android:color/white"
+                        android:padding="8dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

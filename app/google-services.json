@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "559478565295",
+    "firebase_url": "https://recyqtest.firebaseio.com",
+    "project_id": "recyqtest",
+    "storage_bucket": "recyqtest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:559478565295:android:e821bb998008967b",
+        "android_client_info": {
+          "package_name": "com.donkeymonkey.recyq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "559478565295-eb6mo42jm9ou7md7vcenp78nqpnt9cdi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzxsPKgf7oCrUo4QkpVIYO0LEhl-R6aWI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
