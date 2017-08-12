@@ -45,7 +45,7 @@ public class FirebaseAPI {
     }
 
     public void addUserDateToFirebare(User user) {
-        String userID = User.get().getKey();
+        String userID = User.getInstance().getKey();
 
     }
 
@@ -83,7 +83,7 @@ public class FirebaseAPI {
 
     public void getUserDataFromFirebase() {
 
-        String userID = User.get().getKey();
+        String userID = User.getInstance().getKey();
 
         DatabaseReference mUserRef = mClientsRef.child(userID);
 

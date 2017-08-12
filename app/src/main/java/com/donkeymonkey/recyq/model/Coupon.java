@@ -7,6 +7,9 @@ public class Coupon {
     private Integer couponValue;
     private Boolean isRedeemed;
 
+    public Coupon() {
+    }
+
     public Coupon(String uid, String couponName, Integer couponValue, Boolean isRedeemed) {
         this.uid = uid;
         this.couponName = couponName;

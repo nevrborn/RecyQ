@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
@@ -13,73 +14,111 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="1"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
             android:gravity="center">
 
             <LinearLayout
-                android:id="@+id/stats_totalKGDelivered_linearview"
-                style="@style/button_grey"
+                android:id="@+id/stats_totalCO2Delivered_linearview"
+                android:layout_weight="0.5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:layout_marginLeft="10dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/stats_kg_delivered"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="0.0"
-                    android:textSize="20sp"
-                    android:gravity="center_horizontal"/>
+                    android:layout_height="100dp"
+                    android:orientation="vertical">
+
+                    <at.grabner.circleprogress.CircleProgressView
+                        android:id="@+id/stats_tree_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:cpv_barColor="@color/colorBlueLight"
+                        app:cpv_rimColor="@color/colorBlueDark"
+                        app:cpv_rimWidth="10dp"
+                        app:cpv_barWidth="6dp"
+                        app:cpv_value="50"
+                        app:cpv_textSize="0sp"
+                        app:cpv_fillColor="@color/colorGreyVeryLight"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        />
+
+                    <ImageView
+                        android:id="@+id/stats_imageview_tree"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:src="@drawable/tree_icon"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        />
+
+                    <TextView
+                        android:id="@+id/stats_textview_tree_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        />
+
+                </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/stats_co2_saved"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/stats_kg_"
-                    android:textSize="20sp"
-                    android:gravity="center_horizontal"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/stats_delivered"
-                    android:textSize="20sp"
-                    android:gravity="center_horizontal"/>
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/stats_total_co2"
+                    android:textSize="12sp"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/stats_tokens_linearview"
-                style="@style/button_grey"
+                android:id="@+id/stats_totalTokens_linearview"
+                android:layout_weight="0.5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/stats_tokens"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="20sp"
-                    android:gravity="center_horizontal"/>
+                    android:layout_height="100dp"
+                    android:orientation="vertical">
+
+                    <at.grabner.circleprogress.CircleProgressView
+                        android:id="@+id/stats_tokens_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:cpv_barColor="@color/colorBlueLight"
+                        app:cpv_rimColor="@color/colorBlueDark"
+                        app:cpv_rimWidth="10dp"
+                        app:cpv_barWidth="6dp"
+                        app:cpv_value="50"
+                        app:cpv_textSize="0sp"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"/>
+
+                    <ImageView
+                        android:id="@+id/stats_imageview_tokens"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:src="@drawable/recycle_icon"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        />
+
+                </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/stats_tokens_earned"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/stats_tokens"
-                    android:textSize="20sp"
-                    android:gravity="center_horizontal"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/stats_separation"
-                    android:textSize="20sp"
-                    android:gravity="center_horizontal"/>
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/stats_total_tokens"
+                    android:textSize="12sp"/>
 
             </LinearLayout>
 
@@ -87,84 +126,78 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/stats_kg_delivered"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        android:gravity="center_horizontal"
+        android:text="@string/stats_total_kg"
+        android:textSize="12sp"/>
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fadingEdge="none"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="1"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_weight="0.5"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"/>
-
-                <TextView
-                    android:layout_weight="0.5"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"/>
-
-            </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="50dp">
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                           android:id="@+id/stats_textile_layout"
-                          android:orientation="horizontal"
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
-                          android:weightSum="1"
-                          android:background="@color/colorRed"
-                          android:padding="16dp"
-                          android:layout_marginTop="8dp"
                           android:layout_marginBottom="8dp"
                           android:layout_marginLeft="10dp"
                           android:layout_marginRight="10dp"
-                          android:paddingBottom="5dp">
+                          android:layout_marginTop="8dp"
+                          android:background="@color/colorRedDark"
+                          android:orientation="horizontal"
+                          android:padding="16dp"
+                          android:paddingBottom="5dp"
+                          android:weightSum="1">
 
-                <TextView
+                <com.donkeymonkey.recyq.helper.FontFitTextView
                     android:id="@+id/stats_textview_textile_title"
-                    android:layout_weight="0.4"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="@string/stats_textile_title"
+                    android:layout_weight="0.35"
                     android:gravity="center_vertical"
-                    android:textSize="30sp"
-                    android:textColor="@android:color/white"/>
+                    android:text="@string/stats_textile_title"
+                    android:textColor="@android:color/white"
+                    android:textSize="40sp"/>
 
                 <LinearLayout
-                    android:layout_weight="0.6"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="0.6"
                     android:orientation="vertical"
                     android:weightSum="1">
 
-                    <TextView
+                    <com.donkeymonkey.recyq.helper.FontFitTextView
                         android:id="@+id/stats_textile_recycled"
-                        android:layout_weight="0.5"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_weight="0.5"
+                        android:padding="8dp"
                         android:text="@string/stats_recycled"
                         android:textColor="@android:color/white"
-                        android:padding="8dp"/>
+                        android:textSize="12sp"/>
 
-                    <TextView
+                    <com.donkeymonkey.recyq.helper.FontFitTextView
                         android:id="@+id/stats_textile_co2_saved"
-                        android:layout_weight="0.5"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_weight="0.5"
+                        android:padding="8dp"
                         android:text="@string/stats_c02_saved"
                         android:textColor="@android:color/white"
-                        android:padding="8dp"/>
+                        android:textSize="12sp"/>
 
                 </LinearLayout>
 
@@ -172,52 +205,54 @@
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                           android:id="@+id/stats_paper_layout"
-                          android:orientation="horizontal"
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
-                          android:weightSum="1"
-                          android:background="@color/colorLightBlue"
-                          android:padding="16dp"
-                          android:layout_marginTop="8dp"
                           android:layout_marginBottom="8dp"
                           android:layout_marginLeft="10dp"
                           android:layout_marginRight="10dp"
-                          android:paddingBottom="5dp">
+                          android:layout_marginTop="8dp"
+                          android:background="@color/colorBlue"
+                          android:orientation="horizontal"
+                          android:padding="16dp"
+                          android:paddingBottom="5dp"
+                          android:weightSum="1">
 
-                <TextView
+                <com.donkeymonkey.recyq.helper.FontFitTextView
                     android:id="@+id/stats_textview_paper_title"
-                    android:layout_weight="0.4"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="@string/stats_paper_title"
+                    android:layout_weight="0.35"
                     android:gravity="center_vertical"
-                    android:textSize="30sp"
-                    android:textColor="@android:color/white"/>
+                    android:text="@string/stats_paper_title"
+                    android:textColor="@android:color/white"
+                    android:textSize="40sp"/>
 
                 <LinearLayout
-                    android:layout_weight="0.6"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="0.6"
                     android:orientation="vertical"
                     android:weightSum="1">
 
-                    <TextView
+                    <com.donkeymonkey.recyq.helper.FontFitTextView
                         android:id="@+id/stats_paper_recycled"
-                        android:layout_weight="0.5"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_weight="0.5"
+                        android:padding="8dp"
                         android:text="@string/stats_recycled"
                         android:textColor="@android:color/white"
-                        android:padding="8dp"/>
+                        android:textSize="12sp"/>
 
-                    <TextView
+                    <com.donkeymonkey.recyq.helper.FontFitTextView
                         android:id="@+id/stats_paper_co2_saved"
-                        android:layout_weight="0.5"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_weight="0.5"
+                        android:padding="8dp"
                         android:text="@string/stats_c02_saved"
                         android:textColor="@android:color/white"
-                        android:padding="8dp"/>
+                        android:textSize="12sp"/>
 
                 </LinearLayout>
 
@@ -225,52 +260,109 @@
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                           android:id="@+id/stats_pmd_layout"
-                          android:orientation="horizontal"
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
-                          android:weightSum="1"
-                          android:background="@color/colorYellow"
-                          android:padding="16dp"
-                          android:layout_marginTop="8dp"
                           android:layout_marginBottom="8dp"
                           android:layout_marginLeft="10dp"
                           android:layout_marginRight="10dp"
-                          android:paddingBottom="5dp">
+                          android:layout_marginTop="8dp"
+                          android:background="@color/colorOrange"
+                          android:orientation="horizontal"
+                          android:padding="16dp"
+                          android:paddingBottom="5dp"
+                          android:weightSum="1">
 
-                <TextView
+                <com.donkeymonkey.recyq.helper.FontFitTextView
                     android:id="@+id/stats_textview_pmd_title"
-                    android:layout_weight="0.4"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="@string/stats_pmd_title"
+                    android:layout_weight="0.35"
                     android:gravity="center_vertical"
-                    android:textSize="30sp"
-                    android:textColor="@android:color/white"/>
+                    android:text="@string/stats_pmd_title"
+                    android:textColor="@android:color/white"
+                    android:textSize="40sp"/>
 
                 <LinearLayout
-                    android:layout_weight="0.6"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="0.6"
                     android:orientation="vertical"
                     android:weightSum="1">
 
-                    <TextView
+                    <com.donkeymonkey.recyq.helper.FontFitTextView
                         android:id="@+id/stats_pmd_recycled"
-                        android:layout_weight="0.5"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_weight="0.5"
+                        android:padding="8dp"
                         android:text="@string/stats_recycled"
                         android:textColor="@android:color/white"
-                        android:padding="8dp"/>
+                        android:textSize="12sp"/>
 
-                    <TextView
+                    <com.donkeymonkey.recyq.helper.FontFitTextView
                         android:id="@+id/stats_pmd_co2_saved"
-                        android:layout_weight="0.5"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_weight="0.5"
+                        android:padding="8dp"
                         android:text="@string/stats_c02_saved"
                         android:textColor="@android:color/white"
-                        android:padding="8dp"/>
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                          android:id="@+id/stats_glass_layout"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginBottom="8dp"
+                          android:layout_marginLeft="10dp"
+                          android:layout_marginRight="10dp"
+                          android:layout_marginTop="8dp"
+                          android:background="@color/colorYellow"
+                          android:orientation="horizontal"
+                          android:padding="16dp"
+                          android:paddingBottom="5dp"
+                          android:weightSum="1">
+
+                <com.donkeymonkey.recyq.helper.FontFitTextView
+                    android:id="@+id/stats_textview_glass_title"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.35"
+                    android:gravity="center_vertical"
+                    android:text="@string/stats_glass_title"
+                    android:textColor="@android:color/white"
+                    android:textSize="40sp"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6"
+                    android:orientation="vertical"
+                    android:weightSum="1">
+
+                    <com.donkeymonkey.recyq.helper.FontFitTextView
+                        android:id="@+id/stats_glass_co2_saved"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.5"
+                        android:padding="8dp"
+                        android:text="@string/stats_recycled"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp"/>
+
+                    <com.donkeymonkey.recyq.helper.FontFitTextView
+                        android:id="@+id/stats_glass_recycled"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.5"
+                        android:padding="8dp"
+                        android:text="@string/stats_c02_saved"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp"/>
 
                 </LinearLayout>
 
@@ -278,52 +370,54 @@
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                           android:id="@+id/stats_bio_layout"
-                          android:orientation="horizontal"
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
-                          android:weightSum="1"
-                          android:background="@color/colorGreen"
-                          android:padding="16dp"
-                          android:layout_marginTop="8dp"
                           android:layout_marginBottom="8dp"
                           android:layout_marginLeft="10dp"
                           android:layout_marginRight="10dp"
-                          android:paddingBottom="5dp">
+                          android:layout_marginTop="8dp"
+                          android:background="@color/colorGreenDark"
+                          android:orientation="horizontal"
+                          android:padding="16dp"
+                          android:paddingBottom="5dp"
+                          android:weightSum="1">
 
-                <TextView
+                <com.donkeymonkey.recyq.helper.FontFitTextView
                     android:id="@+id/stats_textview_bio_title"
-                    android:layout_weight="0.4"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="@string/stats_bio_title"
+                    android:layout_weight="0.35"
                     android:gravity="center_vertical"
-                    android:textSize="30sp"
-                    android:textColor="@android:color/white"/>
+                    android:text="@string/stats_bio_title"
+                    android:textColor="@android:color/white"
+                    android:textSize="40sp"/>
 
                 <LinearLayout
-                    android:layout_weight="0.6"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="0.6"
                     android:orientation="vertical"
                     android:weightSum="1">
 
-                    <TextView
+                    <com.donkeymonkey.recyq.helper.FontFitTextView
                         android:id="@+id/stats_bio_recycled"
-                        android:layout_weight="0.5"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_weight="0.5"
+                        android:padding="8dp"
                         android:text="@string/stats_recycled"
                         android:textColor="@android:color/white"
-                        android:padding="8dp"/>
+                        android:textSize="12sp"/>
 
-                    <TextView
+                    <com.donkeymonkey.recyq.helper.FontFitTextView
                         android:id="@+id/stats_bio_co2_saved"
-                        android:layout_weight="0.5"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_weight="0.5"
+                        android:padding="8dp"
                         android:text="@string/stats_c02_saved"
                         android:textColor="@android:color/white"
-                        android:padding="8dp"/>
+                        android:textSize="12sp"/>
 
                 </LinearLayout>
 
@@ -331,54 +425,72 @@
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                           android:id="@+id/stats_eWaste_layout"
-                          android:orientation="horizontal"
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
-                          android:weightSum="1"
-                          android:background="@color/colorGrey"
-                          android:padding="16dp"
-                          android:layout_marginTop="8dp"
                           android:layout_marginBottom="8dp"
                           android:layout_marginLeft="10dp"
                           android:layout_marginRight="10dp"
-                          android:paddingBottom="5dp">
+                          android:layout_marginTop="8dp"
+                          android:background="@color/colorGrey"
+                          android:orientation="horizontal"
+                          android:padding="16dp"
+                          android:paddingBottom="15dp"
+                          android:weightSum="1">
 
-                <TextView
+                <com.donkeymonkey.recyq.helper.FontFitTextView
                     android:id="@+id/stats_textview_eWaste_title"
-                    android:layout_weight="0.4"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="@string/stats_eWaste_title"
+                    android:layout_weight="0.35"
                     android:gravity="center_vertical"
-                    android:textSize="30sp"
-                    android:textColor="@android:color/white"/>
+                    android:text="@string/stats_eWaste_title"
+                    android:textColor="@android:color/white"
+                    android:textSize="40sp"/>
 
                 <LinearLayout
-                    android:layout_weight="0.6"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="0.6"
                     android:orientation="vertical"
                     android:weightSum="1">
 
-                    <TextView
+                    <com.donkeymonkey.recyq.helper.FontFitTextView
                         android:id="@+id/stats_eWaste_recycled"
-                        android:layout_weight="0.5"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_weight="0.5"
+                        android:padding="8dp"
                         android:text="@string/stats_recycled"
                         android:textColor="@android:color/white"
-                        android:padding="8dp"/>
+                        android:textSize="12sp"/>
 
-                    <TextView
+                    <com.donkeymonkey.recyq.helper.FontFitTextView
                         android:id="@+id/stats_eWaste_co2_saved"
-                        android:layout_weight="0.5"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_weight="0.5"
+                        android:padding="8dp"
                         android:text="@string/stats_c02_saved"
                         android:textColor="@android:color/white"
-                        android:padding="8dp"/>
+                        android:textSize="12sp"/>
 
                 </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                          android:id="@+id/stats_dummy_layout"
+                          android:layout_width="match_parent"
+                          android:layout_height="40dp"
+                          android:layout_marginBottom="8dp"
+                          android:layout_marginLeft="10dp"
+                          android:layout_marginRight="10dp"
+                          android:layout_marginTop="8dp"
+                          android:background="@android:color/white"
+                          android:orientation="horizontal"
+                          android:padding="16dp"
+                          android:paddingBottom="15dp"
+                          android:weightSum="1">
 
             </LinearLayout>
 

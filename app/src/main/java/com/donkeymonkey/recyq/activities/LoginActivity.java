@@ -4,20 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.donkeymonkey.recyq.R;
-import com.donkeymonkey.recyq.SingleFragmentActivity;
-import com.donkeymonkey.recyq.fragments.LoginFragment;
-import com.donkeymonkey.recyq.fragments.StatsFragment;
+import com.donkeymonkey.recyq.model.Community;
+import com.donkeymonkey.recyq.model.Coupon;
+import com.donkeymonkey.recyq.model.Coupons;
+import com.donkeymonkey.recyq.model.RecyQLocation;
+import com.donkeymonkey.recyq.model.RecyQLocations;
+import com.donkeymonkey.recyq.model.StoreItem;
+import com.donkeymonkey.recyq.model.StoreItems;
 import com.donkeymonkey.recyq.model.User;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -42,22 +43,36 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class LoginActivity extends AppCompatActivity {
 
-    private static final String TAG = "LoginFragment";
+    private static final String TAG = "LoginActivity";
+
+    private User mUser;
+    private ArrayList<StoreItem> mStoreItems;
+    private ArrayList<RecyQLocation> mRecyQLocations;
+    private ArrayList<Coupon> mCoupons;
+    private Community mCommunity;
+
+    private DatabaseReference mClientsRef;
+    private DatabaseReference mCouponsRef;
+    private DatabaseReference mShopsRef;
+    private DatabaseReference mRecyQLocationRef;
 
     // Facebook Parameters
     private CallbackManager mCallbackManager;
     private static Boolean mIsLoggingOut = false;
     private static Boolean mHasJustLoggedOut = false;
     LoginButton mFacebookLoginButton;
-    Boolean mAddedDummyData = false;
 
-    private FirebaseAuth mFirebaseAuth;
-    private User mUser = User.get();
+    private FirebaseAuth mAuth;
+
+    private int mFirebaseAPICalls = 0;
 
     private String mPassword;
     private String mMail;
@@ -79,7 +94,36 @@ public class LoginActivity extends AppCompatActivity {
         Button registerUserButton = (Button) findViewById(R.id.login_register_button);
         Button resetPasswordButton = (Button) findViewById(R.id.login_reset_password_button);
 
-        mFirebaseAuth = FirebaseAuth.getInstance();
+        mUser = User.getInstance();
+        mStoreItems = StoreItems.getInstance();
+        mRecyQLocations = RecyQLocations.getInstance();
+        mCoupons = Coupons.getInstance();
+        mCommunity = Community.getInstance();
+
+        // Check if user is already logged in
+        if (mUser.isUserIsLoggedIn() && !mUser.getUid().equals("")) {
+            Intent intent = StatsActivity.newIntent(getApplicationContext());
+            startActivity(intent);
+            finish();
+        }
+
+        // Check if there is already a Firebase user
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        mClientsRef = FirebaseDatabase.getInstance().getReference("clients");
+        mCouponsRef = FirebaseDatabase.getInstance().getReference("coupons");
+        mShopsRef = FirebaseDatabase.getInstance().getReference("Shops");
+        mRecyQLocationRef = FirebaseDatabase.getInstance().getReference("RecyQ Locations");
+
+        getCouponsFromFirebase();
+        getRecyQLocationsFromFirebase();
+        getStoresFromFirebase();
+        getCommunityDataFromFirebase();
+
+        if (firebaseUser != null) {
+            User.set();
+            queryOrderedBy("uid", User.getInstance().getUid());
+        }
 
         FacebookSdk.sdkInitialize(this);
         mCallbackManager = CallbackManager.Factory.create();
@@ -99,22 +143,26 @@ public class LoginActivity extends AppCompatActivity {
                     mMail = emailEditText.getText().toString();
                     mPassword = passwordEditText.getText().toString();
 
-                    mFirebaseAuth.signInWithEmailAndPassword(mMail, mPassword).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                    mAuth.signInWithEmailAndPassword(mMail, mPassword)
+                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
-                            if (!task.isSuccessful()) {
-                                Log.w(TAG, "signInWithEmail:failed", task.getException());
-                                Toast.makeText(LoginActivity.this, R.string.auth_failed, Toast.LENGTH_SHORT).show();
-                            } else if (task.isSuccessful()) {
-                                Toast.makeText(LoginActivity.this, R.string.sign_in_succesfull, Toast.LENGTH_SHORT).show();
+                                    if (task.isSuccessful()) {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        Log.d(TAG, "signInWithEmail:success");
 
-                                User.set();
-                                queryOrderedBy("uid", User.get().getUid());
-                            }
-                        }
-                    });
+                                        User.set();
+                                        queryOrderedBy("uid", User.getInstance().getUid());
+
+                                    } else {
+                                        // If sign in fails, display a message to the user.
+                                        Log.w(TAG, "signInWithEmail:failed", task.getException());
+                                        Toast.makeText(LoginActivity.this, R.string.auth_failed, Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
 
                 } else {
                     Toast.makeText(LoginActivity.this, R.string.auth_not_all_fields_filled, Toast.LENGTH_SHORT).show();
@@ -124,7 +172,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // Facebook Login Button Setup
         mFacebookLoginButton.setReadPermissions("email", "public_profile");
-        mFacebookLoginButton.setFragment(LoginFragment.newInstance());
 
         mFacebookLoginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -168,14 +215,13 @@ public class LoginActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mFirebaseAuth.getCurrentUser();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // TODO: Do we need this? Can we delete it?
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -204,12 +250,13 @@ public class LoginActivity extends AppCompatActivity {
 
         query.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {;
                 mUser = dataSnapshot.getValue(User.class);
+                mUser.setIsLoggedIn(true);
 
                 User.setInstance(mUser);
 
-                Intent intent = MainActivity.;
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
 
@@ -239,7 +286,7 @@ public class LoginActivity extends AppCompatActivity {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
 
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        mFirebaseAuth.signInWithCredential(credential)
+        mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -247,7 +294,7 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             User.set();
-                            queryOrderedBy("uid", User.get().getUid());
+                            queryOrderedBy("uid", User.getInstance().getUid());
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -259,5 +306,117 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    // MARK - FIREBASE METHODS
+
+    public void getStoresFromFirebase() {
+
+        mShopsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot storeSnapshot: dataSnapshot.getChildren()) {
+
+                    for (DataSnapshot storeItemSnapshot: storeSnapshot.getChildren()) {
+                        StoreItem storeItem = storeItemSnapshot.getValue(StoreItem.class);
+                        mStoreItems.add(storeItem);
+                        Log.e("Got StoreItem", storeItem.getItemName());
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void getRecyQLocationsFromFirebase() {
+
+        mRecyQLocationRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    RecyQLocation recyQLocation = snapshot.getValue(RecyQLocation.class);
+                    mRecyQLocations.add(recyQLocation);
+                    Log.e("Got RecyQLocation", recyQLocation.getName());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void getCouponsFromFirebase() {
+
+        mCouponsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    Coupon coupon = snapshot.getValue(Coupon.class);
+                    mCoupons.add(coupon);
+                    Log.e("Got Coupon", coupon.getCouponName());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void getCommunityDataFromFirebase() {
+
+        mClientsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mCommunity.setCommunitySize((int) dataSnapshot.getChildrenCount());
+                Log.e(TAG, String.valueOf(dataSnapshot.getChildrenCount()));
+
+                for (DataSnapshot clientSnapshot: dataSnapshot.getChildren()) {
+
+                    Number plastic = (Number) clientSnapshot.child("amountOfPlastic").getValue();
+                    Number biowaste = (Number) clientSnapshot.child("amountOfBioWaste").getValue();
+                    Number eWaste = (Number) clientSnapshot.child("amountOfEWaste").getValue();
+                    Number paper = (Number) clientSnapshot.child("amountOfPaper").getValue();
+                    Number textile = (Number) clientSnapshot.child("amountOfTextile").getValue();
+
+                    if (plastic != null) mCommunity.addKilos(plastic.doubleValue());
+                    if (biowaste != null) mCommunity.addKilos(biowaste.doubleValue());
+                    if (eWaste != null) mCommunity.addKilos(eWaste.doubleValue());
+                    if (paper != null) mCommunity.addKilos(paper.doubleValue());
+                    if (textile != null) mCommunity.addKilos(textile.doubleValue());
+
+                    if (dataSnapshot.hasChild("amountOfGlass")) {
+                        Number glass = (Number) clientSnapshot.child("amountOfGlass").getValue();
+                        if (glass != null) mCommunity.addKilos(glass.doubleValue());
+                    }
+                }
+
+
+                Double total_co2 = (mCommunity.getTotalKilosDelivered()/35)*50;
+                mCommunity.addCo2(total_co2);
+
+                int total_tokens = (int) Math.round(mCommunity.getTotalKilosDelivered() / 35.0);
+                mCommunity.addTokens(total_tokens);
+
+                int total_trees = (int) Math.round(mCommunity.getTotalCO2Saved() / 16.6);
+                mCommunity.addTrees(total_trees);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

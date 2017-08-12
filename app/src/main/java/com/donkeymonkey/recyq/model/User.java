@@ -5,7 +5,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.HashMap;
 
-public class User {
+public class User{
 
     private static User mUser;
 
@@ -30,33 +30,9 @@ public class User {
     private Boolean completed;
     private String uid;
     private Integer spentCoins;
-
-
-    public Double getAmountOfGlass() {
-        return amountOfGlass;
-    }
-
-    public void setAmountOfGlass(Double amountOfGlass) {
-        this.amountOfGlass = amountOfGlass;
-    }
-
-//    public HashMap<String, String> getWasteDepositInfo() {
-//        return wasteDepositInfo;
-//    }
-//
-//    public void setWasteDepositInfo(HashMap<String, String> wasteDepositInfo) {
-//        this.wasteDepositInfo = wasteDepositInfo;
-//    }
-
-    public Boolean getCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(Boolean completed) {
-        this.completed = completed;
-    }
-
-
+    private boolean userIsLoggedIn;
+    private int tokens;
+    private int treesSaved;
 
     private User() {
 
@@ -68,7 +44,6 @@ public class User {
         addedByUser = firebaseUser.getEmail();
         key = firebaseUser.getUid();
         setUid(key);
-        setIsLoggedIn(true);
     }
 
     public static User getInstance() {
@@ -84,10 +59,6 @@ public class User {
         mUser = user;
     }
 
-    public static User get() {
-        return mUser;
-    }
-
     public static void set() {
         // if we have a loggedin user, set mUser
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -101,8 +72,12 @@ public class User {
         mUser = null;
     }
 
-    private void setIsLoggedIn(boolean isLoggedIn) {
-        boolean sIsLoggedIn = isLoggedIn;
+    public void setIsLoggedIn(boolean isLoggedIn) {
+        userIsLoggedIn = isLoggedIn;
+    }
+
+    public boolean isUserIsLoggedIn() {
+        return userIsLoggedIn;
     }
 
     public String getKey() {
@@ -112,7 +87,7 @@ public class User {
     public void setKey(String key) {
         this.key = key;
     }
-
+    
     public String getName() {
         return name;
     }
@@ -121,6 +96,7 @@ public class User {
         this.name = name;
     }
 
+    
     public String getLastName() {
         return lastName;
     }
@@ -129,6 +105,7 @@ public class User {
         this.lastName = lastName;
     }
 
+    
     public String getAddress() {
         return address;
     }
@@ -137,6 +114,7 @@ public class User {
         this.address = address;
     }
 
+    
     public String getZipCode() {
         return zipCode;
     }
@@ -145,6 +123,7 @@ public class User {
         this.zipCode = zipCode;
     }
 
+    
     public String getCity() {
         return city;
     }
@@ -153,6 +132,7 @@ public class User {
         this.city = city;
     }
 
+    
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -161,6 +141,7 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+    
     public String getAddedByUser() {
         return addedByUser;
     }
@@ -169,6 +150,7 @@ public class User {
         this.addedByUser = addedByUser;
     }
 
+    
     public String getNearestWasteLocation() {
         return nearestWasteLocation;
     }
@@ -177,8 +159,13 @@ public class User {
         this.nearestWasteLocation = nearestWasteLocation;
     }
 
+    
     public Double getAmountOfPlastic() {
+        if (amountOfPlastic == null) {
+            return 0.0;
+        }
         return amountOfPlastic;
+
     }
 
     public void setAmountOfPlastic(Double amountOfPlastic) {
@@ -190,7 +177,11 @@ public class User {
         this.amountOfPlastic = amountOfPlastic;
     }
 
+    
     public Double getAmountOfPaper() {
+        if (amountOfPaper == null) {
+                return 0.0;
+        }
         return amountOfPaper;
     }
 
@@ -203,7 +194,11 @@ public class User {
         this.amountOfPaper = amountOfPaper;
     }
 
+    
     public Double getAmountOfTextile() {
+        if (amountOfTextile == null) {
+            return 0.0;
+        }
         return amountOfTextile;
     }
 
@@ -216,7 +211,11 @@ public class User {
         this.amountOfTextile = amountOfTextile;
     }
 
+    
     public Double getAmountOfEWaste() {
+        if (amountOfEWaste == null) {
+            return 0.0;
+        }
         return amountOfEWaste;
     }
 
@@ -229,7 +228,11 @@ public class User {
         this.amountOfEWaste = amountOfEWaste;
     }
 
+    
     public Double getAmountOfBioWaste() {
+        if (amountOfBioWaste == null) {
+            return 0.0;
+        }
         return amountOfBioWaste;
     }
 
@@ -242,6 +245,7 @@ public class User {
         this.amountOfBioWaste = amountOfBioWaste;
     }
 
+    
     public String getUid() {
         return uid;
     }
@@ -250,6 +254,7 @@ public class User {
         this.uid = uid;
     }
 
+    
     public Integer getSpentCoins() {
         return spentCoins;
     }
@@ -257,4 +262,122 @@ public class User {
     public void setSpentCoins(Integer spentCoins) {
         this.spentCoins = spentCoins;
     }
+
+    
+    public Double getAmountOfGlass() {
+        if (amountOfGlass == null) {
+            return 0.0;
+        }
+        return amountOfGlass;
+    }
+
+    public void setAmountOfGlass(Double amountOfGlass) {
+        this.amountOfGlass = amountOfGlass;
+    }
+
+//    public HashMap<String, String> getWasteDepositInfo() {
+//        return wasteDepositInfo;
+//    }
+//
+//    public void setWasteDepositInfo(HashMap<String, String> wasteDepositInfo) {
+//        this.wasteDepositInfo = wasteDepositInfo;
+//    }
+
+    
+    public Boolean getCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(Boolean completed) {
+        this.completed = completed;
+    }
+
+    public Double getTotalKgRecycled() {
+        if (mUser.isUserIsLoggedIn()) {
+            return getAmountOfTextile() + getAmountOfPaper() + getAmountOfPlastic() + getAmountOfGlass() + getAmountOfBioWaste() + getAmountOfEWaste();
+        }
+
+        return 0.0;
+    }
+
+    public Double getTotalCo2Saved() {
+        if (mUser.isUserIsLoggedIn()) {
+            return getTextileC02Saved() + getPaperC02Saved() + getPlasticsC02Saved() + getGlassC02Saved() + getBioWasteC02Saved() + getEWasteC02Saved();
+        }
+
+        return 0.0;
+    }
+
+    public Double getTextileC02Saved() {
+        if (getAmountOfTextile() != null) {
+            return Math.ceil((mUser.getAmountOfTextile()/35) * 50);
+        }
+
+        return 0.0;
+    }
+
+    public Double getPaperC02Saved() {
+        if (getAmountOfPaper() != null) {
+            return Math.ceil((mUser.getAmountOfPaper()/35) * 50);
+        }
+
+        return 0.0;
+    }
+
+    public Double getGlassC02Saved() {
+        if (getAmountOfGlass() != null) {
+            return Math.ceil((mUser.getAmountOfGlass()/35) * 50);
+        }
+
+        return 0.0;
+    }
+
+    public Double getPlasticsC02Saved() {
+        if (getAmountOfPlastic() != null) {
+            return Math.ceil((mUser.getAmountOfPaper()/35) * 50);
+        }
+
+        return 0.0;
+    }
+
+    public Double getBioWasteC02Saved() {
+        if (getAmountOfBioWaste() != null) {
+            return Math.ceil((mUser.getAmountOfBioWaste()/35) * 50);
+        }
+
+        return 0.0;
+    }
+
+    public Double getEWasteC02Saved() {
+        if (getAmountOfEWaste() != null) {
+            return Math.ceil((mUser.getAmountOfEWaste()/35) * 50);
+        }
+
+        return 0.0;
+    }
+
+    public int getTokens() {
+        int tokens = 0;
+
+        if (getTotalKgRecycled() != null) {
+            tokens = (int) Math.round(getTotalKgRecycled() / 35);
+            tokens = tokens - getSpentCoins();
+            return tokens;
+        }
+
+        return 0;
+    }
+
+    public void setTokens(int tokens) {
+        this.tokens = tokens;
+    }
+
+    public int getTreesSaved() {
+        if (getTotalCo2Saved() != null) {
+            return (int) Math.round(getTotalCo2Saved() / 16.6);
+        }
+
+        return 0;
+    }
+
 }

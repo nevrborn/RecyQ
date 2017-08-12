@@ -171,7 +171,7 @@ public class SignupFragment extends Fragment {
                     Toast.makeText(getActivity(), R.string.sign_in_succesfull, Toast.LENGTH_SHORT).show();
 
                     User.set();
-                    queryOrderedBy("uid", User.get().getUid());
+                    queryOrderedBy("uid", User.getInstance().getUid());
 
                     Intent intent = StatsActivity.newIntent(getContext());
                     startActivity(intent);

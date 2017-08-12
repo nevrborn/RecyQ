@@ -1,34 +1,64 @@
 package com.donkeymonkey.recyq.model;
 
-import android.media.Image;
+import java.util.ArrayList;
 
 public class StoreItem {
 
-    private String storeItemName;
-    private String storeItemDesciption;
-    private Image storeItemImage;
-    private Integer storeItemPrice;
+    private String shopName;
+    private String itemName;
+    private String detailDescription;
+    private int tokenAmount;
+    private String imageString;
 
-    public StoreItem(String storeItemName, String storeItemDesciption, Image storeItemImage, Integer storeItemPrice) {
-        this.storeItemName = storeItemName;
-        this.storeItemDesciption = storeItemDesciption;
-        this.storeItemImage = storeItemImage;
-        this.storeItemPrice = storeItemPrice;
+    public StoreItem() {
+
     }
 
-    public String getStoreItemName() {
-        return storeItemName;
+    public StoreItem(String shopName, String itemName, String detailDescription, int tokenAmount, String imageString) {
+        this.shopName = shopName;
+        this.itemName = itemName;
+        this.detailDescription = detailDescription;
+        this.tokenAmount = tokenAmount;
+        this.imageString = imageString;
     }
 
-    public String getStoreItemDesciption() {
-        return storeItemDesciption;
+    public String getShopName() {
+        return shopName;
     }
 
-    public Image getStoreItemImage() {
-        return storeItemImage;
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
     }
 
-    public Integer getStoreItemPrice() {
-        return storeItemPrice;
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public String getDetailDescription() {
+        return detailDescription;
+    }
+
+    public void setDetailDescription(String detailDescription) {
+        this.detailDescription = detailDescription;
+    }
+
+    public int getTokenAmount() {
+        return tokenAmount;
+    }
+
+    public void setTokenAmount(int tokenAmount) {
+        this.tokenAmount = tokenAmount;
+    }
+
+    public String getImageString() {
+        return imageString;
+    }
+
+    public void setImageString(String imageString) {
+        this.imageString = imageString;
     }
 }
