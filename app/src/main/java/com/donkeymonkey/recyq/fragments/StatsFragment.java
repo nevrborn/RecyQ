@@ -1,5 +1,6 @@
 package com.donkeymonkey.recyq.fragments;
 
+import android.app.FragmentManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,11 +12,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.donkeymonkey.recyq.R;
+import com.donkeymonkey.recyq.dialogs.DialogCO2;
+import com.donkeymonkey.recyq.dialogs.DialogStoreItem;
+import com.donkeymonkey.recyq.dialogs.DialogTokens;
 import com.donkeymonkey.recyq.model.User;
 
 import at.grabner.circleprogress.CircleProgressView;
 
 public class StatsFragment extends Fragment {
+
+    private static final String TAG = "StoreFragment";
+    private static final String DIALOG_CO2 = "dialog_co2";
+    private static final String DIALOG_TOKENS = "dialog_tokens";
 
     private User mUser;
 
@@ -98,6 +106,9 @@ public class StatsFragment extends Fragment {
         eWaste_recycled_text.setTypeface(pt_mono_font);
         eWaste_co2_text.setTypeface(pt_mono_font);
 
+        co2_progress.setValueAnimated(mUser.getRemainingCO2ToSaveOneTree());
+        tokens_progress.setValueAnimated(mUser.getRemainingKGToEarnOneToken());
+
         co2_saved.setText(getString(R.string.stats_total_co2, mUser.getTotalCo2Saved()));
         trees_saved.setText(getString(R.string.stats_total_trees_saved, mUser.getTreesSaved()));
         kilos_delivered.setText(getString(R.string.stats_total_kg, mUser.getTotalKgRecycled()));
@@ -124,14 +135,18 @@ public class StatsFragment extends Fragment {
         co2_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                FragmentManager fragmentManager = getActivity().getFragmentManager();
+                DialogCO2 dialogCO2 = new DialogCO2();
+                dialogCO2.show(fragmentManager, DIALOG_CO2);
             }
         });
 
         tokens_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                FragmentManager fragmentManager = getActivity().getFragmentManager();
+                DialogTokens dialogTokens = new DialogTokens();
+                dialogTokens.show(fragmentManager, DIALOG_TOKENS);
             }
         });
 

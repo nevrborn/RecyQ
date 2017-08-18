@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">RecyQ</string>
+    <string name="no_internet">Internet werkt niet</string>
+    <string name="ok">OK</string>
 
     // FIREBASE
     <string name="auth_failed">Authenticatie is mislukt</string>
@@ -45,13 +47,25 @@
     <string name="stats_bio_title">BIO</string>
     <string name="stats_eWaste_title">E-WASTE</string>
 
+    // CO2 SCREEN
+    <string name="co2_saved_title">CO2 BESPAARD</string>
+    <string name="co2_saved_text">Bij elke 11.6 kg ingeleverd afval bespaar je 16.6 kg CO2 dit staat gelijk aan een boom die een jaar lang groeit.</string>
+    <string name="co2_saved_total_co2">%1$.1fkg CO2 BESPAARD</string>
+
+
+    // TOKENS SCREEN
+    <string name="tokens_earned_title">TOKENS VERDIEND</string>
+    <string name="tokens_earned_text">Bij 35 kg ingeleverd afval verdien je een digitale token die korting geeft en heb je ook 50 kg CO2 gecompenseerd. Evenveel als 3 bomen die een jaar lang groeien. Voor een betere planeet!</string>
+    <string name="tokens_earned_total_tokens">%1$d TOKENS VERDIEND</string>
+    <string name="tokens_earned_total_token">1 TOKEN VERDIEND</string>
+
     // COMMUNITY SCREEN
     <string name="community_total">Totaal</string>
     <string name="community_co2_saved">co2 bespaard</string>
     <string name="community_recycled">gerecycled</string>
     <string name="community_kg">%1$.1f KG</string>
     <string name="community_trees_number">%1$d</string>
-    <string name="community_trees">bomen een jaar lang\nlaten groeien</string>
+    <string name="community_trees">bomen een jaar lang laten groeien</string>
     <string name="community_saved">gespaard</string>
     <string name="community_whatAreWeDoing">Wat gaan we doen?</string>
     <string name="community_whoIsOnTop">Wie staat er bovenaan?</string>
@@ -66,5 +80,38 @@
     <string name="store_token_to_exchange">"Je hebt 1 token verdiend.</string>
     <string name="store_exchange_tokens">Wissel hier je RecyQ tokens in.</string>
     <string name="store_example_text">Item description</string>
+    <string name="store_not_now">Niet nu</string>
+
+    // STORE ITEM SCREEN
+    <string name="storeitem_price_one">Prijs: 1 token</string>
+    <string name="storeitem_price_more">Prijs: %1$d tokens</string>
+    <string name="storeitem_buy">Koop</string>
+
+    // LEADERBOARD SCREEN
+    <string name="leaderboard_title">RANGLIJST</string>
+    <string name="leaderboard_kilos">%1$.1f kg</string>
+    <string name="leaderboard_placing">Je bent %1$d van %2$d</string>
+
+    // PARTNERS SCREEN
+    <string name="partner_title">PARTNERS</string>
+
+    // PROJECTS SCREEN
+    <string name="projects_title">WAT GAAN WE DOEN?</string>
+    <string name="projects_text">Afval scheiden loont. Niet alleen voor de wereld maar ook voor de portemonnee en je buurt. Afval is geen afval maar de basis voor wat nieuws. Door bewuster om te gaan met grondstoffen heb je veel voordelen. Afval verbranden kost geld en is slecht voor het milieu. Wees daarom bewust over wat je weggooit. RecyQ biedt via haar partners verschillende initiatieven waar aan je mee kan doen.</string>
+
+    // LOCATIONS SCREEN
+    <string name="locations_pick_up">PICKUP</string>
+    <string name="locations_pick_up_title">OPHAAL SERVICE</string>
+    <string name="locations_pick_up_text">Laat je plastic, papier, textiel en E-waste ophalen door de Zero Waste Pickup.</string>
+    <string name="locations_pick_up_text_call">Bel 06-36537264</string>
+    <string name="locations_pick_up_phone_number">0636537264</string>
+
+    // SOCIAL SCREEN
+    <string-array name="social_buttons">
+        <item>Instagram</item>
+        <item>Youtube</item>
+        <item>Facebook</item>
+    </string-array>
+
 
 </resources>

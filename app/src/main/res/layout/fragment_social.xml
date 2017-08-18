@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+        <org.honorato.multistatetogglebutton.MultiStateToggleButton
+            android:id="@+id/social_toggle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:values="@array/social_buttons"
+            app:mstbPrimaryColor="@color/colorGrey"
+            app:mstbSecondaryColor="@color/colorGreyVeryLight"
+            android:layout_margin="20dp"
+            >
+
+        </org.honorato.multistatetogglebutton.MultiStateToggleButton>
+
+    <WebView
+        android:id="@+id/social_webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    </WebView>
+
+</LinearLayout>

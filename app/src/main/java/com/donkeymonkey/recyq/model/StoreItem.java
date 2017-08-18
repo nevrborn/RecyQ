@@ -1,9 +1,11 @@
 package com.donkeymonkey.recyq.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class StoreItem {
 
+    private String key;
     private String shopName;
     private String itemName;
     private String detailDescription;
@@ -14,12 +16,12 @@ public class StoreItem {
 
     }
 
-    public StoreItem(String shopName, String itemName, String detailDescription, int tokenAmount, String imageString) {
-        this.shopName = shopName;
-        this.itemName = itemName;
-        this.detailDescription = detailDescription;
-        this.tokenAmount = tokenAmount;
-        this.imageString = imageString;
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getShopName() {

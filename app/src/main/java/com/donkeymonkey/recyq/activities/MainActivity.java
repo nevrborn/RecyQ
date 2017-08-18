@@ -1,7 +1,5 @@
 package com.donkeymonkey.recyq.activities;
 
-import android.app.ActionBar;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -13,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.donkeymonkey.recyq.R;
 import com.donkeymonkey.recyq.fragments.CommunityFragment;
@@ -40,17 +37,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private User mUser;
-    private ArrayList<StoreItem> mStoreItems;
-    private ArrayList<RecyQLocation> mRecyQLocations;
-    private ArrayList<Coupon> mCoupons;
-
-    private FirebaseAuth mAuth;
-    private DatabaseReference mClientsRef;
-    private DatabaseReference mCouponsRef;
-    private DatabaseReference mShopsRef;
-    private DatabaseReference mRecyQLocationRef;
-
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -66,12 +52,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mAuth = FirebaseAuth.getInstance();
-        mClientsRef = FirebaseDatabase.getInstance().getReference("clients");
-        mCouponsRef = FirebaseDatabase.getInstance().getReference("coupons");
-        mShopsRef = FirebaseDatabase.getInstance().getReference("Shops");
-        mRecyQLocationRef = FirebaseDatabase.getInstance().getReference("RecyQ Locations");
-
         // Set up view
         setContentView(R.layout.activity_main);
 
@@ -83,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayUseLogoEnabled(true);
             getSupportActionBar().setIcon(R.drawable.recyq_logo);
             getSupportActionBar().setTitle("");
+
         }
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -92,28 +73,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         setupTabIcons();
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        mUser = User.getInstance();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        mUser = User.getInstance();
-        mStoreItems = StoreItems.getInstance();
-        mRecyQLocations = RecyQLocations.getInstance();
-        mCoupons = Coupons.getInstance();
-
-        getStoresFromFirebase();
-        getRecyQLocationsFromFirebase();
-        getCouponsFromFirebase();
 
     }
 
@@ -131,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupTabIcons() {
 
-        Float fontSize = 9f;
+        Float fontSize = 11f;
 
         TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
         tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.stats_icon, 0, 0);
@@ -194,69 +153,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // MARK - FIREBASE METHODS
-
-    public void getStoresFromFirebase() {
-
-        mShopsRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot storeSnapshot: dataSnapshot.getChildren()) {
-
-                    for (DataSnapshot storeItemSnapshot: storeSnapshot.getChildren()) {
-                        StoreItem storeItem = storeItemSnapshot.getValue(StoreItem.class);
-                        mStoreItems.add(storeItem);
-                        Log.e("Got StoreItem", storeItem.getItemName());
-                    }
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    public void getRecyQLocationsFromFirebase() {
-
-        mRecyQLocationRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                    RecyQLocation recyQLocation = snapshot.getValue(RecyQLocation.class);
-                    mRecyQLocations.add(recyQLocation);
-                    Log.e("Got RecyQLocation", recyQLocation.getName());
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    public void getCouponsFromFirebase() {
-
-        mCouponsRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                    Coupon coupon = snapshot.getValue(Coupon.class);
-                    mCoupons.add(coupon);
-                    Log.e("Got Coupon", coupon.getCouponName());
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
 }

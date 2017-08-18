@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/pickup_dialog_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/locations_pick_up_text"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"/>
+
+    <TextView
+        android:id="@+id/pickup_dialog_phonenumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/locations_pick_up_text_call"
+        android:textAlignment="center"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/colorBlue"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/pick_up_bike"
+        android:layout_marginTop="15dp"/>
+
+</LinearLayout>

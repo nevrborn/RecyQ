@@ -12,9 +12,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.donkeymonkey.recyq.R;
+import com.donkeymonkey.recyq.Utils.RecyQUtils;
 import com.donkeymonkey.recyq.model.Community;
 import com.donkeymonkey.recyq.model.Coupon;
 import com.donkeymonkey.recyq.model.Coupons;
+import com.donkeymonkey.recyq.model.Leaderboard;
+import com.donkeymonkey.recyq.model.LeaderboardEntry;
 import com.donkeymonkey.recyq.model.RecyQLocation;
 import com.donkeymonkey.recyq.model.RecyQLocations;
 import com.donkeymonkey.recyq.model.StoreItem;
@@ -30,6 +33,8 @@ import com.facebook.GraphResponse;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -54,10 +59,11 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
     private User mUser;
-    private ArrayList<StoreItem> mStoreItems;
-    private ArrayList<RecyQLocation> mRecyQLocations;
+    private StoreItems mStoreItems;
+    private RecyQLocations mRecyQLocations;
     private ArrayList<Coupon> mCoupons;
     private Community mCommunity;
+    private Leaderboard mLeaderboard;
 
     private DatabaseReference mClientsRef;
     private DatabaseReference mCouponsRef;
@@ -99,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
         mRecyQLocations = RecyQLocations.getInstance();
         mCoupons = Coupons.getInstance();
         mCommunity = Community.getInstance();
+        mLeaderboard = Leaderboard.getInstance();
 
         // Check if user is already logged in
         if (mUser.isUserIsLoggedIn() && !mUser.getUid().equals("")) {
@@ -110,10 +117,17 @@ public class LoginActivity extends AppCompatActivity {
         // Check if there is already a Firebase user
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
         mClientsRef = FirebaseDatabase.getInstance().getReference("clients");
         mCouponsRef = FirebaseDatabase.getInstance().getReference("coupons");
         mShopsRef = FirebaseDatabase.getInstance().getReference("Shops");
         mRecyQLocationRef = FirebaseDatabase.getInstance().getReference("RecyQ Locations");
+
+        mClientsRef.keepSynced(true);
+        mCouponsRef.keepSynced(true);
+        mShopsRef.keepSynced(true);
+        mRecyQLocationRef.keepSynced(true);
 
         getCouponsFromFirebase();
         getRecyQLocationsFromFirebase();
@@ -143,27 +157,30 @@ public class LoginActivity extends AppCompatActivity {
                     mMail = emailEditText.getText().toString();
                     mPassword = passwordEditText.getText().toString();
 
-                    mAuth.signInWithEmailAndPassword(mMail, mPassword)
-                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                    if (RecyQUtils.hasInternetConnection(getApplicationContext()) && isGooglePlayServicesAvailable()) {
+                        mAuth.signInWithEmailAndPassword(mMail, mPassword)
+                                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
-                                    if (task.isSuccessful()) {
-                                        // Sign in success, update UI with the signed-in user's information
-                                        Log.d(TAG, "signInWithEmail:success");
+                                        if (task.isSuccessful()) {
+                                            // Sign in success, update UI with the signed-in user's information
+                                            Log.d(TAG, "signInWithEmail:success");
 
-                                        User.set();
-                                        queryOrderedBy("uid", User.getInstance().getUid());
+                                            User.set();
+                                            queryOrderedBy("uid", User.getInstance().getUid());
 
-                                    } else {
-                                        // If sign in fails, display a message to the user.
-                                        Log.w(TAG, "signInWithEmail:failed", task.getException());
-                                        Toast.makeText(LoginActivity.this, R.string.auth_failed, Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            // If sign in fails, display a message to the user.
+                                            Log.w(TAG, "signInWithEmail:failed", task.getException());
+                                            Toast.makeText(LoginActivity.this, R.string.auth_failed, Toast.LENGTH_SHORT).show();
+                                        }
                                     }
-                                }
-                            });
-
+                                });
+                    } else {
+                        Toast.makeText(LoginActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(LoginActivity.this, R.string.auth_not_all_fields_filled, Toast.LENGTH_SHORT).show();
                 }
@@ -320,7 +337,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     for (DataSnapshot storeItemSnapshot: storeSnapshot.getChildren()) {
                         StoreItem storeItem = storeItemSnapshot.getValue(StoreItem.class);
-                        mStoreItems.add(storeItem);
+                        storeItem.setKey(storeItemSnapshot.getKey());
+                        mStoreItems.addStoreItem(storeItem);
                         Log.e("Got StoreItem", storeItem.getItemName());
                     }
 
@@ -342,7 +360,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     RecyQLocation recyQLocation = snapshot.getValue(RecyQLocation.class);
-                    mRecyQLocations.add(recyQLocation);
+                    mRecyQLocations.addRecyQLocation(recyQLocation);
                     Log.e("Got RecyQLocation", recyQLocation.getName());
                 }
             }
@@ -384,22 +402,63 @@ public class LoginActivity extends AppCompatActivity {
 
                 for (DataSnapshot clientSnapshot: dataSnapshot.getChildren()) {
 
+                    String key = "";
+                    String firstName = "";
+                    String lastName = "";
+
+                    Object uidObject = clientSnapshot.child("uid").getValue();
+                    Object firstNameObject = clientSnapshot.child("name").getValue();
+                    Object lastNameObject =  clientSnapshot.child("lastName").getValue();
+
+                    if (uidObject != null) key = uidObject.toString();
+                    if (firstNameObject != null) firstName = firstNameObject.toString();
+                    if (lastNameObject != null) lastName = lastNameObject.toString();
+
+                    if (firstName.length() != 0) firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1).toLowerCase();
+                    if (lastName.length() != 0) lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1).toLowerCase();
+
+                    String nameOfuser = firstName + " " + lastName;
+
+                    Double totalKgPerUser = 0.0;
+
                     Number plastic = (Number) clientSnapshot.child("amountOfPlastic").getValue();
                     Number biowaste = (Number) clientSnapshot.child("amountOfBioWaste").getValue();
                     Number eWaste = (Number) clientSnapshot.child("amountOfEWaste").getValue();
                     Number paper = (Number) clientSnapshot.child("amountOfPaper").getValue();
                     Number textile = (Number) clientSnapshot.child("amountOfTextile").getValue();
 
-                    if (plastic != null) mCommunity.addKilos(plastic.doubleValue());
-                    if (biowaste != null) mCommunity.addKilos(biowaste.doubleValue());
-                    if (eWaste != null) mCommunity.addKilos(eWaste.doubleValue());
-                    if (paper != null) mCommunity.addKilos(paper.doubleValue());
-                    if (textile != null) mCommunity.addKilos(textile.doubleValue());
+
+                    if (plastic != null) {
+                        mCommunity.addKilos(plastic.doubleValue());
+                        totalKgPerUser = totalKgPerUser + plastic.doubleValue();
+                    }
+                    if (biowaste != null) {
+                        mCommunity.addKilos(biowaste.doubleValue());
+                        totalKgPerUser = totalKgPerUser + biowaste.doubleValue();
+                    }
+                    if (eWaste != null) {
+                        mCommunity.addKilos(eWaste.doubleValue());
+                        totalKgPerUser = totalKgPerUser + eWaste.doubleValue();
+                    }
+                    if (paper != null) {
+                        mCommunity.addKilos(paper.doubleValue());
+                        totalKgPerUser = totalKgPerUser + paper.doubleValue();
+                    }
+                    if (textile != null) {
+                        mCommunity.addKilos(textile.doubleValue());
+                        totalKgPerUser = totalKgPerUser + textile.doubleValue();
+                    }
 
                     if (dataSnapshot.hasChild("amountOfGlass")) {
                         Number glass = (Number) clientSnapshot.child("amountOfGlass").getValue();
-                        if (glass != null) mCommunity.addKilos(glass.doubleValue());
+                        if (glass != null) {
+                            mCommunity.addKilos(glass.doubleValue());
+                            totalKgPerUser = totalKgPerUser + glass.doubleValue();
+                        }
                     }
+
+                    LeaderboardEntry leaderboardEntry = new LeaderboardEntry(key, nameOfuser, totalKgPerUser);
+                    mLeaderboard.addLeaderBoardEntry(leaderboardEntry);
                 }
 
 
@@ -418,5 +477,19 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+
+
+    public boolean isGooglePlayServicesAvailable() {
+        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        int status = googleApiAvailability.isGooglePlayServicesAvailable(getApplicationContext());
+        if (status != ConnectionResult.SUCCESS) {
+            if (googleApiAvailability.isUserResolvableError(status)) {
+                googleApiAvailability.getErrorDialog(LoginActivity.this, status, 2404).show();
+            }
+            return false;
+        }
+        return true;
     }
 }

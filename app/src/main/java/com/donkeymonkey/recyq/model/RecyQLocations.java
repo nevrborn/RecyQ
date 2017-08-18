@@ -1,38 +1,51 @@
 package com.donkeymonkey.recyq.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RecyQLocations {
 
-    private static ArrayList<RecyQLocation> mRecyQLocations;
+    private static RecyQLocations mRecyQLocations;
+    private static List<RecyQLocation> mRecyQLocationsList = new ArrayList<>();
 
-    public static ArrayList<RecyQLocation> getInstance() {
+    public static RecyQLocations getInstance() {
         if (mRecyQLocations == null) {
-            ArrayList<RecyQLocation> recyQLocations = new ArrayList<RecyQLocation>();
+            RecyQLocations recyQLocations = new RecyQLocations();
             setInstance(recyQLocations);
         }
 
         return mRecyQLocations;
     }
 
-    public static void setInstance(ArrayList<RecyQLocation> recyQLocations) {
+    public RecyQLocations() {
+
+    }
+
+    public static void setInstance(RecyQLocations recyQLocations) {
         mRecyQLocations = recyQLocations;
     }
 
-    public RecyQLocations(ArrayList<RecyQLocation> recyQLocations) {
+    public RecyQLocations(RecyQLocations recyQLocations) {
         mRecyQLocations = recyQLocations;
     }
 
-    public ArrayList<RecyQLocation> getRecyQLocations() {
+    public RecyQLocations getRecyQLocations() {
         return mRecyQLocations;
     }
 
-    public void setRecyQLocation(ArrayList<RecyQLocation> recyQLocations) {
+    public void setRecyQLocation(RecyQLocations recyQLocations) {
         mRecyQLocations = recyQLocations;
     }
 
     public void addRecyQLocation(RecyQLocation recyQLocation) {
-        mRecyQLocations.add(recyQLocation);
+        mRecyQLocationsList.add(recyQLocation);
     }
 
+    public List<RecyQLocation> getRecyQLocationsList() {
+        return mRecyQLocationsList;
+    }
+
+    public static void setRecyQLocationsList(List<RecyQLocation> mRecyQLocationsList) {
+        RecyQLocations.mRecyQLocationsList = mRecyQLocationsList;
+    }
 }

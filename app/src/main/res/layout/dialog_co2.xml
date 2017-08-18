@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical">
+
+        <at.grabner.circleprogress.CircleProgressView
+            android:id="@+id/co2_saved_tree_progress"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            app:cpv_barColor="@color/colorBlueLight"
+            app:cpv_rimColor="@color/colorBlueDark"
+            app:cpv_rimWidth="30dp"
+            app:cpv_barWidth="20dp"
+            app:cpv_textSize="0sp"
+            app:cpv_fillColor="@color/colorGreyVeryLight"
+            android:layout_margin="20dp"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"/>
+
+        <ImageView
+            android:id="@+id/co2_saved_imageview_tree"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:src="@drawable/tree_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            />
+
+        <com.donkeymonkey.recyq.helper.FontFitTextView
+            android:id="@+id/co2_saved_textview_tree_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="30sp"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/co2_saved_kg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal"
+        android:text="@string/co2_saved_total_co2"
+        android:layout_margin="15dp"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:id="@+id/co2_saved_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal"
+        android:text="@string/co2_saved_text"
+        android:textSize="12sp"
+        android:layout_margin="15dp"/>
+
+</LinearLayout>

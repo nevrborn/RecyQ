@@ -380,4 +380,12 @@ public class User{
         return 0;
     }
 
+    public float getRemainingCO2ToSaveOneTree() {
+        return (float) (100 / (getTotalCo2Saved() % 16.6));
+    }
+
+    public float getRemainingKGToEarnOneToken() {
+        return (float) (100 / (getTokens() % 35));
+    }
+
 }

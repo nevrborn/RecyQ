@@ -4,34 +4,48 @@ import java.util.ArrayList;
 
 public class StoreItems {
 
-    private static ArrayList<StoreItem> mStores;
+    private static StoreItems mStoresItems;
+    private ArrayList<StoreItem> mStoreItemArrayList = new ArrayList<>();
 
-    public static ArrayList<StoreItem> getInstance() {
-        if (mStores == null) {
-            ArrayList<StoreItem> stores = new ArrayList<StoreItem>();
+    public static StoreItems getInstance() {
+        if (mStoresItems == null) {
+            StoreItems stores = new StoreItems();
             setInstance(stores);
         }
 
-        return mStores;
+        return mStoresItems;
     }
 
-    public static void setInstance(ArrayList<StoreItem> stores) {
-        mStores = stores;
+    private static void setInstance(StoreItems stores) {
+        mStoresItems = stores;
     }
 
-    public StoreItems(ArrayList<StoreItem> stores) {
-        mStores = stores;
-    }
-
-    public ArrayList<StoreItem> getStores() {
-        return mStores;
+    public ArrayList<StoreItem> getStoresItems() {
+        return mStoreItemArrayList;
     }
 
     public void setStores(ArrayList<StoreItem> stores) {
-        mStores = stores;
+        mStoreItemArrayList = stores;
     }
 
-    public void addStore(StoreItem store) {
-        mStores.add(store);
+    public void addStoreItem(StoreItem storeItem) {
+        mStoreItemArrayList.add(storeItem);
     }
+
+    public void clear() {
+        mStoreItemArrayList.clear();
+    }
+
+    public StoreItem findStoreItemWithKey(String key) {
+
+        StoreItem storeitem = new StoreItem();
+
+        for (StoreItem item: mStoreItemArrayList) {
+            if (item.getKey().equals(key)) {
+                storeitem = item;
+            }
+        }
+        return storeitem;
+    }
+
 }

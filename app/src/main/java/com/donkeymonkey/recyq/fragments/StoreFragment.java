@@ -1,5 +1,7 @@
 package com.donkeymonkey.recyq.fragments;
 
+import android.app.FragmentManager;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +17,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.donkeymonkey.recyq.R;
+import com.donkeymonkey.recyq.activities.StoreItemActivity;
+import com.donkeymonkey.recyq.dialogs.DialogPickUp;
+import com.donkeymonkey.recyq.dialogs.DialogStoreItem;
 import com.donkeymonkey.recyq.model.StoreItem;
 import com.donkeymonkey.recyq.model.StoreItems;
 import com.donkeymonkey.recyq.model.User;
@@ -23,8 +28,12 @@ import java.util.List;
 
 public class StoreFragment extends Fragment {
 
+    private static final String TAG = "StoreFragment";
+    private static final String DIALOG_STOREITEM = "dialog_storeitem";
+    private static final String STORE_ITEM_KEY = "store_item_key";
+
     private User mUser;
-    private List<StoreItem> mStoreItems;
+    private StoreItems mStoreItems;
 
     private RecyclerView mRecyclerView;
     private StoreItemAdapter mStoreItemAdapter;
@@ -69,22 +78,22 @@ public class StoreFragment extends Fragment {
 
     public class StoreItemAdapter extends RecyclerView.Adapter<StoreItemHolder> {
 
-        List<StoreItem> mStoreItems;
+        List<StoreItem> mStoreItemsList;
 
-        public StoreItemAdapter(List<StoreItem> storeItemsToShow) {
-            mStoreItems = storeItemsToShow;
+        public StoreItemAdapter(StoreItems storeItemsToShow) {
+            mStoreItemsList = storeItemsToShow.getStoresItems();
         }
 
         @Override
         public StoreItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(getActivity());
-            View itemView = inflater.inflate(R.layout.storeitem_viewholder, parent, false);
+            View itemView = inflater.inflate(R.layout.viewholder_storeitem, parent, false);
             return new StoreItemHolder(itemView);
         }
 
         @Override
         public void onBindViewHolder(StoreItemHolder holder, int position) {
-            StoreItem storeItem = mStoreItems.get(position);
+            StoreItem storeItem = mStoreItemsList.get(position);
             holder.setStoreItem(storeItem);
             holder.itemView.setOnClickListener(holder);
 
@@ -107,7 +116,7 @@ public class StoreFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return mStoreItems.size();
+            return mStoreItemsList.size();
         }
     }
 
@@ -145,7 +154,14 @@ public class StoreFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-
+//            Intent intent = StoreItemActivity.newIntent(getContext(), mStoreItem.getKey());
+//            startActivity(intent);
+            FragmentManager fragmentManager = getActivity().getFragmentManager();
+            DialogStoreItem dialogStoreItem = new DialogStoreItem();
+            Bundle arguments = new Bundle();
+            arguments.putString(STORE_ITEM_KEY, mStoreItem.getKey());
+            dialogStoreItem.setArguments(arguments);
+            dialogStoreItem.show(fragmentManager, DIALOG_STOREITEM);
         }
     }
 

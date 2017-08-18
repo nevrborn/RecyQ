@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical">
+
+        <at.grabner.circleprogress.CircleProgressView
+            android:id="@+id/tokens_earned_tree_progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cpv_barColor="@color/colorBlueLight"
+            app:cpv_rimColor="@color/colorBlueDark"
+            app:cpv_rimWidth="30dp"
+            app:cpv_barWidth="20dp"
+            app:cpv_textSize="0sp"
+            app:cpv_fillColor="@color/colorGreyVeryLight"
+            android:layout_margin="20dp"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"/>
+
+        <ImageView
+            android:id="@+id/tokens_earned_imageview_recycle"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:src="@drawable/recycle_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tokens_earned_tokens"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal"
+        android:text="@string/tokens_earned_total_token"
+        android:textSize="12sp"
+        android:layout_margin="15dp"/>
+
+    <TextView
+        android:id="@+id/tokens_earned_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal"
+        android:text="@string/tokens_earned_text"
+        android:textSize="12sp"
+        android:layout_margin="15dp"/>
+
+</LinearLayout>

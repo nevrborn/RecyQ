@@ -1,5 +1,7 @@
 package com.donkeymonkey.recyq.fragments;
 
+import android.app.FragmentManager;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,22 +13,26 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.donkeymonkey.recyq.R;
+import com.donkeymonkey.recyq.activities.LeaderboardActivity;
+import com.donkeymonkey.recyq.activities.PartnersActivity;
+import com.donkeymonkey.recyq.dialogs.DialogLeaderboard;
+import com.donkeymonkey.recyq.dialogs.DialogPartners;
+import com.donkeymonkey.recyq.dialogs.DialogPickUp;
+import com.donkeymonkey.recyq.dialogs.DialogProjects;
 import com.donkeymonkey.recyq.model.Community;
 import com.donkeymonkey.recyq.model.User;
 
 public class CommunityFragment extends Fragment {
 
+    private static final String TAG = "CommunityFragment";
+    private static final String DIALOG_LEADERBAORD = "dialog_leaderboard";
+    private static final String DIALOG_PARTNERS = "dialog_partners";
+    private static final String DIALOG_PROJECTS = "dialog_projects";
+
     private Community mCommunity;
 
     public static CommunityFragment newInstance() {
         return new CommunityFragment();
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
     }
 
     @Nullable
@@ -54,7 +60,7 @@ public class CommunityFragment extends Fragment {
         TextView trees_saved = (TextView) view.findViewById(R.id.community_textview_total_trees_saved);
 
         Button whatAreWeDoingButton = (Button) view.findViewById(R.id.community_button_whatAreWeDoing);
-        Button whoIsOnTopButton = (Button) view.findViewById(R.id.community_button_whoISOnTop);
+        Button leaderboardButton = (Button) view.findViewById(R.id.community_button_whoISOnTop);
         Button communityPartnersButton = (Button) view.findViewById(R.id.community_button_partners);
 
         // Setting fonts
@@ -78,7 +84,7 @@ public class CommunityFragment extends Fragment {
         trees_saved.setTypeface(pt_mono_font);
 
         whatAreWeDoingButton.setTypeface(pt_mono_font);
-        whoIsOnTopButton.setTypeface(pt_mono_font);
+        leaderboardButton.setTypeface(pt_mono_font);
         communityPartnersButton.setTypeface(pt_mono_font);
 
         // Setting values
@@ -92,21 +98,27 @@ public class CommunityFragment extends Fragment {
         whatAreWeDoingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                FragmentManager fragmentManager = getActivity().getFragmentManager();
+                DialogProjects dialogProjects = new DialogProjects();
+                dialogProjects.show(fragmentManager, DIALOG_PROJECTS);
             }
         });
 
-        whoIsOnTopButton.setOnClickListener(new View.OnClickListener() {
+        leaderboardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                FragmentManager fragmentManager = getActivity().getFragmentManager();
+                DialogLeaderboard dialogLeaderboard = new DialogLeaderboard();
+                dialogLeaderboard.show(fragmentManager, DIALOG_LEADERBAORD);
             }
         });
 
         communityPartnersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                FragmentManager fragmentManager = getActivity().getFragmentManager();
+                DialogPartners dialogPartners = new DialogPartners();
+                dialogPartners.show(fragmentManager, DIALOG_PARTNERS);
             }
         });
 

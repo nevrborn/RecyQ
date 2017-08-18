@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/leaderboard_cell"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="100dp"
+              android:weightSum="1"
+              android:padding="10dp"
+              android:background="@drawable/border_image"
+              android:gravity="center_vertical"
+              android:layout_marginBottom="1dp">
+
+    <TextView
+        android:id="@+id/leaderboard_textview_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorGrey"
+        android:textSize="40sp"
+        android:text="1"
+        android:layout_marginLeft="10dp"
+        android:textAlignment="center"
+        android:gravity="center_vertical|center_horizontal"/>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:weightSum="1"
+        android:layout_width="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/leaderboard_textview_name"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:textSize="12sp"
+            android:lines="2"
+            android:textColor="@color/colorGrey"/>
+
+        <TextView
+            android:id="@+id/leaderboard_textview_kilos"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="bottom"
+            android:textColor="@color/colorGrey"/>
+
+    </LinearLayout>
+
+</LinearLayout>

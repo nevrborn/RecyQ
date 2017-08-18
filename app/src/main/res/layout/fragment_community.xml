@@ -48,7 +48,7 @@
                     android:id="@+id/community_textview_total_co2_saved"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/community_saved"
+                    android:text="@string/community_co2_saved"
                     android:textColor="@android:color/white"
                     android:textAlignment="center"
                     android:textSize="12sp"/>
@@ -91,7 +91,7 @@
                     android:id="@+id/community_textview_total_recycled_saved"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/community_saved"
+                    android:text="@string/community_recycled"
                     android:textColor="@android:color/white"
                     android:textAlignment="center"
                     android:textSize="12sp"/>
@@ -191,7 +191,7 @@
                     android:textColor="@android:color/white"
                     android:textAlignment="center"
                     android:textSize="12sp"
-                    android:lines="2"/>
+                    android:lines="3"/>
 
             </LinearLayout>
 

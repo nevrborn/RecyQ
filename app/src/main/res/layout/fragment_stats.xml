@@ -37,7 +37,6 @@
                         app:cpv_rimColor="@color/colorBlueDark"
                         app:cpv_rimWidth="10dp"
                         app:cpv_barWidth="6dp"
-                        app:cpv_value="50"
                         app:cpv_textSize="0sp"
                         app:cpv_fillColor="@color/colorGreyVeryLight"
                         android:layout_centerInParent="true"
@@ -95,7 +94,6 @@
                         app:cpv_rimColor="@color/colorBlueDark"
                         app:cpv_rimWidth="10dp"
                         app:cpv_barWidth="6dp"
-                        app:cpv_value="50"
                         app:cpv_textSize="0sp"
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"/>
