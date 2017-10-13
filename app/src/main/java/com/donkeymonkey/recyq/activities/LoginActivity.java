@@ -363,8 +363,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 if (isUserInFirebase) {
-                    //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    Intent intent = new Intent(getApplicationContext(), TutorialActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 } else {
                     getFacebookParameters();
@@ -399,10 +398,7 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = SignupActivity.newIntent(getApplicationContext(), true);
                     startActivity(intent);
                 } else {
-//                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                    startActivity(intent);
-
-                    Intent intent = new Intent(getApplicationContext(), TutorialActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 }
 
