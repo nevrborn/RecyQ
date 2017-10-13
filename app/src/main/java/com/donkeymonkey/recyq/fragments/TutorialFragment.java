@@ -33,6 +33,8 @@ public class TutorialFragment extends Fragment {
 
     private TextView mStepCounter;
     private  TextView mText;
+    private LinearLayout mPageControlView;
+    private List<ImageView> mPagecontrol;
 
     private String[] mStepArray;
     private String[] mTitleArray;
@@ -55,7 +57,7 @@ public class TutorialFragment extends Fragment {
         mOldTitle = (TextView) view.findViewById(R.id.tutorial_title_1);
         mNewTitle = (TextView) view.findViewById(R.id.tutorial_title_2);
         mText = (TextView) view.findViewById(R.id.tutorial_text);
-        final LinearLayout pageControlView = (LinearLayout) view.findViewById(R.id.tutorial_linearlayout_pagecontrol);
+        mPageControlView = (LinearLayout) view.findViewById(R.id.tutorial_linearlayout_pagecontrol);
         final Button button = (Button) view.findViewById(R.id.tutorial_button);
 
         mOldLinearLayout = (LinearLayout) view.findViewById(R.id.tutorial_linearlayout_1);
@@ -66,11 +68,11 @@ public class TutorialFragment extends Fragment {
         ImageView page3 = (ImageView) view.findViewById(R.id.tutorial_page_3);
         ImageView page4 = (ImageView) view.findViewById(R.id.tutorial_page_4);
 
-        final List<ImageView> pagecontrol = new ArrayList<>();
-        pagecontrol.add(page1);
-        pagecontrol.add(page2);
-        pagecontrol.add(page3);
-        pagecontrol.add(page4);
+        mPagecontrol = new ArrayList<>();
+        mPagecontrol.add(page1);
+        mPagecontrol.add(page2);
+        mPagecontrol.add(page3);
+        mPagecontrol.add(page4);
 
         mColorArray.add(ContextCompat.getColor(getContext(), R.color.colorGreen));
         mColorArray.add(ContextCompat.getColor(getContext(), R.color.colorBlue));
@@ -88,7 +90,7 @@ public class TutorialFragment extends Fragment {
         button.setTypeface(volvobroad_font);
 
         button.setVisibility(View.GONE);
-        pageControlView.setVisibility(View.VISIBLE);
+        mPageControlView.setVisibility(View.VISIBLE);
 
         page1.setAlpha(1.0f);
         page2.setAlpha(0.3f);
@@ -114,15 +116,7 @@ public class TutorialFragment extends Fragment {
                     mText.setText(mTextArray[index]);
 
                     button.setVisibility(View.GONE);
-                    pageControlView.setVisibility(View.VISIBLE);
-
-                    for (int j = 0; j < pagecontrol.size(); j++) {
-                        if (j == index) {
-                            pagecontrol.get(index).setAlpha(1.0f);
-                        } else {
-                            pagecontrol.get(index).setAlpha(0.3f);
-                        }
-                    }
+                    mPageControlView.setVisibility(View.VISIBLE);
 
                     slideView(index, false);
 
@@ -139,18 +133,10 @@ public class TutorialFragment extends Fragment {
 
                     if (index == 3) {
                         button.setVisibility(View.VISIBLE);
-                        pageControlView.setVisibility(View.GONE);
+                        mPageControlView.setVisibility(View.GONE);
                     } else {
                         button.setVisibility(View.GONE);
-                        pageControlView.setVisibility(View.VISIBLE);
-                    }
-
-                    for (int j = 0; j < pagecontrol.size(); j++) {
-                        if (j == index) {
-                            pagecontrol.get(index).setAlpha(1.0f);
-                        } else {
-                            pagecontrol.get(index).setAlpha(0.3f);
-                        }
+                        mPageControlView.setVisibility(View.VISIBLE);
                     }
 
                     slideView(index, true);
@@ -211,6 +197,14 @@ public class TutorialFragment extends Fragment {
                 mNewTitle.setTypeface(volvobroad_font);
                 mNewTitle.setTextSize(35);
                 mNewTitle.setVisibility(View.VISIBLE);
+
+                for (int j = 0; j < mPagecontrol.size(); j++) {
+                    if (j == index) {
+                        mPagecontrol.get(j).setAlpha(1.0f);
+                    } else {
+                        mPagecontrol.get(j).setAlpha(0.3f);
+                    }
+                }
             }
 
             @Override
