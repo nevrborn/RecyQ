@@ -72,4 +72,12 @@ public class Community {
             mTotalTreesSaved = mTotalTreesSaved + value;
         }
     }
+
+    public void clear() {
+        mCommunitySize = 0;
+        mTotalKilosDelivered = 0.0;
+        mTotalCO2Saved = 0.0;
+        mTotalTokensEarned = 0;
+        mTotalTreesSaved = 0;
+    }
 }

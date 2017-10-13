@@ -9,13 +9,16 @@ import com.donkeymonkey.recyq.fragments.SignupFragment;
 
 public class SignupActivity extends SingleFragmentActivity {
 
-    public static Intent newIntent(Context context) {
+    private static Boolean mIsFacebookUser;
+
+    public static Intent newIntent(Context context, Boolean isFacebookUser) {
+        mIsFacebookUser = isFacebookUser;
         return new Intent(context, SignupActivity.class);
     }
 
     @Override
     protected Fragment createFragment() {
-        return SignupFragment.newInstance();
+        return SignupFragment.newInstance(mIsFacebookUser);
     }
 
 

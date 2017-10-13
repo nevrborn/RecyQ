@@ -1,38 +1,64 @@
 package com.donkeymonkey.recyq.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Coupons {
 
-    private static ArrayList<Coupon> mCoupons;
+    private static Coupons mCoupons;
+    private List<Coupon> mCouponList = new ArrayList<>();
 
-    public static ArrayList<Coupon> getInstance() {
+    public static Coupons getInstance() {
         if (mCoupons == null) {
-            ArrayList<Coupon> Coupons = new ArrayList<Coupon>();
-            setInstance(Coupons);
+            Coupons coupons = new Coupons();
+            setInstance(coupons);
         }
 
         return mCoupons;
     }
 
-    public static void setInstance(ArrayList<Coupon> Coupons) {
-        mCoupons = Coupons;
+    public Coupons() {
     }
 
-    public Coupons(ArrayList<Coupon> Coupons) {
-        mCoupons = Coupons;
+    public static void setInstance(Coupons coupons) {
+        mCoupons = coupons;
     }
 
-    public ArrayList<Coupon> getCoupons() {
+    public Coupons(Coupons coupons) {
+        mCoupons = coupons;
+    }
+
+    public Coupons getCoupons() {
         return mCoupons;
     }
 
-    public void setCoupon(ArrayList<Coupon> Coupons) {
-        mCoupons = Coupons;
+    public void setCoupon(Coupons coupons) {
+        mCoupons = coupons;
     }
 
     public void addCoupon(Coupon Coupon) {
-        mCoupons.add(Coupon);
+        mCouponList.add(Coupon);
     }
-    
+
+    public List<Coupon> getCouponList() {
+        return mCouponList;
+    }
+
+    public void setCouponList(List<Coupon> couponList) {
+        mCouponList = couponList;
+    }
+
+    public List<Coupon> getCouponsForUser(String uid) {
+
+        List<Coupon> couponList = new ArrayList<>();
+
+        for (Coupon coupon: getCouponList()) {
+
+            if (coupon.getOwnerID().equals(uid)) couponList.add(coupon);
+
+        }
+
+        return couponList;
+
+    }
 }

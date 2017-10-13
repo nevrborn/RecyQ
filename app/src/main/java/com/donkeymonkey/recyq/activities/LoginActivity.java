@@ -1,11 +1,15 @@
 package com.donkeymonkey.recyq.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,9 +54,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.Collections;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -61,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
     private User mUser;
     private StoreItems mStoreItems;
     private RecyQLocations mRecyQLocations;
-    private ArrayList<Coupon> mCoupons;
+    private Coupons mCoupons;
     private Community mCommunity;
     private Leaderboard mLeaderboard;
 
@@ -87,6 +92,8 @@ public class LoginActivity extends AppCompatActivity {
         // Required empty public constructor
     }
 
+    // v9bhnyiLX!WFxf9h
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,15 +116,18 @@ public class LoginActivity extends AppCompatActivity {
 
         // Check if user is already logged in
         if (mUser.isUserIsLoggedIn() && !mUser.getUid().equals("")) {
-            Intent intent = StatsActivity.newIntent(getApplicationContext());
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
         }
 
         // Check if there is already a Firebase user
+        if (FirebaseDatabase.getInstance() == null) {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        }
+
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         mClientsRef = FirebaseDatabase.getInstance().getReference("clients");
         mCouponsRef = FirebaseDatabase.getInstance().getReference("coupons");
@@ -136,7 +146,8 @@ public class LoginActivity extends AppCompatActivity {
 
         if (firebaseUser != null) {
             User.set();
-            queryOrderedBy("uid", User.getInstance().getUid());
+            findUserInFirebase(User.getInstance().getUid());
+            //loadUserFromFirebase("uid", User.getInstance().getUid());
         }
 
         FacebookSdk.sdkInitialize(this);
@@ -144,8 +155,8 @@ public class LoginActivity extends AppCompatActivity {
         AppEventsLogger.activateApp(this);
 
         // set testuser ready to log in - JUST FOR TESTING!
-        emailEditText.setText("robstassen@gmail.com");
-        passwordEditText.setText("rob123");
+        emailEditText.setText("jarle@test.nl");
+        passwordEditText.setText("test123");
 
         // Firebase login
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -169,7 +180,8 @@ public class LoginActivity extends AppCompatActivity {
                                             Log.d(TAG, "signInWithEmail:success");
 
                                             User.set();
-                                            queryOrderedBy("uid", User.getInstance().getUid());
+                                            findUserInFirebase(User.getInstance().getUid());
+                                            //loadUserFromFirebase("uid", User.getInstance().getUid());
 
                                         } else {
                                             // If sign in fails, display a message to the user.
@@ -195,9 +207,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
                 Log.d(TAG, "facebook:onSuccess:" + loginResult);
                 handleFacebookAccessToken(loginResult.getAccessToken());
-
-                Intent intent = StatsActivity.newIntent(getApplicationContext());
-                startActivity(intent);
+                getFacebookParameters();
             }
 
             @Override
@@ -214,7 +224,7 @@ public class LoginActivity extends AppCompatActivity {
         registerUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = SignupActivity.newIntent(getApplicationContext());
+                Intent intent = SignupActivity.newIntent(getApplicationContext(), false);
                 startActivity(intent);
             }
         });
@@ -223,9 +233,45 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(LoginActivity.this);
+                LayoutInflater inflater = getLayoutInflater();
+                final View dialogView = inflater.inflate(R.layout.reset_password_dialog, null);
+                dialogBuilder.setView(dialogView);
+
+                final EditText emailField = (EditText) dialogView.findViewById(R.id.edit1);
+
+                dialogBuilder.setTitle(getResources().getString(R.string.reset_password_title));
+                dialogBuilder.setMessage(getResources().getString(R.string.reset_password_text));
+                dialogBuilder.setPositiveButton(getResources().getString(R.string.reset_password_ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        resetFirebasePassword(emailField.getText().toString());
+                    }
+                });
+                dialogBuilder.setNegativeButton(getResources().getString(R.string.reset_password_cancel), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        //pass
+                    }
+                });
+
+                AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.show();
+
+
             }
         });
 
+    }
+
+    private void resetFirebasePassword(String email) {
+        FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Email sent.");
+                        }
+                    }
+                });
     }
 
     @Override
@@ -233,7 +279,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-
     }
 
     @Override
@@ -248,38 +293,131 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
+                if (object != null) {
 
+                    mUser = User.getInstance();
+
+                    try {
+                        String first_name = (String) object.get("first_name");
+                        String last_name = (String) object.get("last_name");
+                        String email = (String) object.get("email");
+
+                        mUser.setName(first_name);
+                        mUser.setLastName(last_name);
+                        mUser.setAddedByUser(email);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    // GET PHOTO URL IF POSSIBLE
+                    try {
+                        JSONObject pictureObject = object.getJSONObject("picture");
+                        JSONObject pictureData = pictureObject.getJSONObject("data");
+                        String facebookPictureURL = pictureData.getString("url");
+                        Log.i(TAG, "Facebook PICTURE URL is: " + facebookPictureURL);
+                        mUser.setPhotoPath(Uri.parse(facebookPictureURL));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    Intent intent = SignupActivity.newIntent(getApplicationContext(), true);
+                    startActivity(intent);
+
+                }
             }
         });
 
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,hometown,friends{id,name,picture},gender,birthday,picture{url}");
+        parameters.putString("fields", "id,name,first_name,last_name,email,picture{url}");
 
         request.setParameters(parameters);
         request.executeAsync();
 
     }
 
-    private void queryOrderedBy(String child, String value) {
+    private void findUserInFirebase(final String userID) {
+
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("clients");
+
+        final Query query = reference.orderByChild("uid").equalTo(userID);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Boolean isUserInFirebase = false;
+
+                if (dataSnapshot.exists()) {
+                    mUser = User.getInstance();
+
+                    for (DataSnapshot client: dataSnapshot.getChildren()) {
+                        mUser = client.getValue(User.class);
+                        mUser.setIsLoggedIn(true);
+                        mUser.setLoggingOut(false);
+
+                        User.setInstance(mUser);
+
+                        isUserInFirebase = true;
+                    }
+                }
+
+                if (isUserInFirebase) {
+                    //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), TutorialActivity.class);
+                    startActivity(intent);
+                } else {
+                    getFacebookParameters();
+                }
+
+                query.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void loadUserFromFirebase(String child, String userID) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
-        Query query = reference.child("clients").orderByChild("uid").equalTo(value);
+        final Query query = reference.child("clients").orderByChild("uid").equalTo(userID);
 
         query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {;
                 mUser = dataSnapshot.getValue(User.class);
                 mUser.setIsLoggedIn(true);
+                mUser.setLoggingOut(false);
 
                 User.setInstance(mUser);
 
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                if (mUser.getAddress() == null || mUser.getCity() == null || mUser.getNearestWasteLocation() == null || mUser.getPhoneNumber() == null) {
+                    Intent intent = SignupActivity.newIntent(getApplicationContext(), true);
+                    startActivity(intent);
+                } else {
+//                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                    startActivity(intent);
+
+                    Intent intent = new Intent(getApplicationContext(), TutorialActivity.class);
+                    startActivity(intent);
+                }
+
+                query.removeEventListener(this);
+
+
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
+                if (dataSnapshot.getValue() == null) {
+                    Intent intent = SignupActivity.newIntent(getApplicationContext(), true);
+                    startActivity(intent);
+                }
             }
 
             @Override
@@ -296,7 +434,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
+
+
         });
+
+
     }
 
     private void handleFacebookAccessToken(AccessToken token) {
@@ -311,7 +453,9 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             User.set();
-                            queryOrderedBy("uid", User.getInstance().getUid());
+                            mUser = User.getInstance();
+                            findUserInFirebase(mUser.getUid());
+                            //loadUserFromFirebase("uid", User.getInstance().getUid());
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -332,6 +476,8 @@ public class LoginActivity extends AppCompatActivity {
         mShopsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                mStoreItems.getStoresItems().clear();
 
                 for (DataSnapshot storeSnapshot: dataSnapshot.getChildren()) {
 
@@ -358,11 +504,15 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                mRecyQLocations.getRecyQLocationsList().clear();
+
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     RecyQLocation recyQLocation = snapshot.getValue(RecyQLocation.class);
                     mRecyQLocations.addRecyQLocation(recyQLocation);
                     Log.e("Got RecyQLocation", recyQLocation.getName());
                 }
+
+                Collections.reverse(mRecyQLocations.getRecyQLocationsList());
             }
 
             @Override
@@ -378,9 +528,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                mCoupons.getCouponList().clear();
+
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     Coupon coupon = snapshot.getValue(Coupon.class);
-                    mCoupons.add(coupon);
+                    mCoupons.addCoupon(coupon);
                     Log.e("Got Coupon", coupon.getCouponName());
                 }
             }
@@ -397,8 +549,10 @@ public class LoginActivity extends AppCompatActivity {
         mClientsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                mCommunity.clear();
+
                 mCommunity.setCommunitySize((int) dataSnapshot.getChildrenCount());
-                Log.e(TAG, String.valueOf(dataSnapshot.getChildrenCount()));
 
                 for (DataSnapshot clientSnapshot: dataSnapshot.getChildren()) {
 

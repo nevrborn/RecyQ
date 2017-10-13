@@ -94,7 +94,7 @@ public class DialogPartners extends DialogFragment {
         @Override
         public PartnersHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(getActivity());
-            View itemView = inflater.inflate(R.layout.viewholder_partner, parent, false);
+            View itemView = LayoutInflater.from(getActivity()).inflate(R.layout.viewholder_partner, parent, false);
             return new PartnersHolder(itemView);
         }
 

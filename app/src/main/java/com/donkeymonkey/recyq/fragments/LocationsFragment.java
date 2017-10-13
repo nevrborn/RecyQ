@@ -38,6 +38,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.Collections;
 import java.util.List;
 
 public class LocationsFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -132,6 +133,7 @@ public class LocationsFragment extends Fragment implements GoogleApiClient.Conne
 
         public LocationsAdapter(RecyQLocations recyQLocations) {
             mRecyQLocationList = recyQLocations.getRecyQLocationsList();
+            Collections.reverse(mRecyQLocationList);
         }
 
         @Override

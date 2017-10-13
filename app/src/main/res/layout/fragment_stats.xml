@@ -33,7 +33,7 @@
                         android:id="@+id/stats_tree_progress"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:cpv_barColor="@color/colorBlueLight"
+                        app:cpv_barColor="@color/colorGreenLight"
                         app:cpv_rimColor="@color/colorBlueDark"
                         app:cpv_rimWidth="10dp"
                         app:cpv_barWidth="6dp"
@@ -47,7 +47,7 @@
                         android:id="@+id/stats_imageview_tree"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:src="@drawable/tree_icon"
+                        android:src="@drawable/tree_icon2"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         />
@@ -59,6 +59,7 @@
                         android:text="0"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
+                        android:textColor="@color/colorGrey"
                         />
 
                 </RelativeLayout>
@@ -70,7 +71,8 @@
                     android:layout_marginTop="8dp"
                     android:gravity="center_horizontal"
                     android:text="@string/stats_total_co2"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp"
+                    android:textColor="@color/colorGrey"/>
 
             </LinearLayout>
 
@@ -90,7 +92,7 @@
                         android:id="@+id/stats_tokens_progress"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:cpv_barColor="@color/colorBlueLight"
+                        app:cpv_barColor="@color/colorGreenLight"
                         app:cpv_rimColor="@color/colorBlueDark"
                         app:cpv_rimWidth="10dp"
                         app:cpv_barWidth="6dp"
@@ -102,7 +104,7 @@
                         android:id="@+id/stats_imageview_tokens"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:src="@drawable/recycle_icon"
+                        android:src="@drawable/recycle_icon2"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         />
@@ -116,6 +118,7 @@
                     android:layout_marginTop="8dp"
                     android:gravity="center_horizontal"
                     android:text="@string/stats_total_tokens"
+                    android:textColor="@color/colorGrey"
                     android:textSize="12sp"/>
 
             </LinearLayout>
@@ -132,6 +135,7 @@
         android:padding="8dp"
         android:gravity="center_horizontal"
         android:text="@string/stats_total_kg"
+        android:textColor="@color/colorGrey"
         android:textSize="12sp"/>
 
     <ScrollView
@@ -150,7 +154,7 @@
                           android:id="@+id/stats_textile_layout"
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
-                          android:layout_marginBottom="8dp"
+                          android:layout_marginBottom="4dp"
                           android:layout_marginLeft="10dp"
                           android:layout_marginRight="10dp"
                           android:layout_marginTop="8dp"
@@ -205,7 +209,7 @@
                           android:id="@+id/stats_paper_layout"
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
-                          android:layout_marginBottom="8dp"
+                          android:layout_marginBottom="4dp"
                           android:layout_marginLeft="10dp"
                           android:layout_marginRight="10dp"
                           android:layout_marginTop="8dp"
@@ -260,7 +264,7 @@
                           android:id="@+id/stats_pmd_layout"
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
-                          android:layout_marginBottom="8dp"
+                          android:layout_marginBottom="4dp"
                           android:layout_marginLeft="10dp"
                           android:layout_marginRight="10dp"
                           android:layout_marginTop="8dp"
@@ -315,7 +319,7 @@
                           android:id="@+id/stats_glass_layout"
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
-                          android:layout_marginBottom="8dp"
+                          android:layout_marginBottom="4dp"
                           android:layout_marginLeft="10dp"
                           android:layout_marginRight="10dp"
                           android:layout_marginTop="8dp"
@@ -370,7 +374,7 @@
                           android:id="@+id/stats_bio_layout"
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
-                          android:layout_marginBottom="8dp"
+                          android:layout_marginBottom="4dp"
                           android:layout_marginLeft="10dp"
                           android:layout_marginRight="10dp"
                           android:layout_marginTop="8dp"
@@ -425,7 +429,7 @@
                           android:id="@+id/stats_eWaste_layout"
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
-                          android:layout_marginBottom="8dp"
+                          android:layout_marginBottom="4dp"
                           android:layout_marginLeft="10dp"
                           android:layout_marginRight="10dp"
                           android:layout_marginTop="8dp"
@@ -480,7 +484,7 @@
                           android:id="@+id/stats_dummy_layout"
                           android:layout_width="match_parent"
                           android:layout_height="40dp"
-                          android:layout_marginBottom="8dp"
+                          android:layout_marginBottom="4dp"
                           android:layout_marginLeft="10dp"
                           android:layout_marginRight="10dp"
                           android:layout_marginTop="8dp"

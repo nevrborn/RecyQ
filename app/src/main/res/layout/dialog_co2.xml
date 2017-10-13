@@ -14,7 +14,7 @@
             android:id="@+id/co2_saved_tree_progress"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            app:cpv_barColor="@color/colorBlueLight"
+            app:cpv_barColor="@color/colorGreenLight"
             app:cpv_rimColor="@color/colorBlueDark"
             app:cpv_rimWidth="30dp"
             app:cpv_barWidth="20dp"
@@ -28,7 +28,7 @@
             android:id="@+id/co2_saved_imageview_tree"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:src="@drawable/tree_icon"
+            android:src="@drawable/tree_icon2"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             />

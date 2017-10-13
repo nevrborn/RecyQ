@@ -113,8 +113,8 @@ public class DialogLeaderboard extends DialogFragment {
                 holder.mName.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorRedDark));
                 holder.mKilos.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorRedDark));
             } else {
-                holder.mName.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorGrey));
-                holder.mKilos.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorGrey));
+                holder.mName.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorWhite));
+                holder.mKilos.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorWhite));
             }
         }
 

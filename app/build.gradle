@@ -11,6 +11,7 @@ android {
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [HOCKEYAPP_APP_ID: "fd993064f9dd41fdb73114d5efd94528"]
     }
     buildTypes {
         release {
@@ -21,6 +22,7 @@ android {
 }
 
 repositories {
+    jcenter()
     mavenCentral()
     maven { url "https://jitpack.io" }
 }
@@ -43,6 +45,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.github.jakob-grabner:Circle-Progress-View:v1.3'
     compile 'org.honorato.multistatetogglebutton:multistatetogglebutton:0.2.2'
+    compile 'net.hockeyapp.android:HockeySDK:5.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -1,7 +1,6 @@
 package com.donkeymonkey.recyq.fragments;
 
 import android.app.FragmentManager;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,8 +16,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.donkeymonkey.recyq.R;
-import com.donkeymonkey.recyq.activities.StoreItemActivity;
-import com.donkeymonkey.recyq.dialogs.DialogPickUp;
 import com.donkeymonkey.recyq.dialogs.DialogStoreItem;
 import com.donkeymonkey.recyq.model.StoreItem;
 import com.donkeymonkey.recyq.model.StoreItems;

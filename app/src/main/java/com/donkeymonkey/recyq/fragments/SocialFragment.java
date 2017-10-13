@@ -1,5 +1,7 @@
 package com.donkeymonkey.recyq.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,12 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.donkeymonkey.recyq.R;
 
 import org.honorato.multistatetogglebutton.MultiStateToggleButton;
 import org.honorato.multistatetogglebutton.ToggleButton;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class SocialFragment extends Fragment {
@@ -28,6 +32,20 @@ public class SocialFragment extends Fragment {
 
         MultiStateToggleButton toggle = (MultiStateToggleButton) view.findViewById(R.id.social_toggle);
         final WebView webview = (WebView) view.findViewById(R.id.social_webview);
+
+        toggle.setValue(2);
+
+        webview.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if(!(url.startsWith("intent"))){
+                    view.loadUrl(url);
+                }
+                return true;
+            }
+
+        });
 
         toggle.setValue(0);
 

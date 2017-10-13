@@ -10,17 +10,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.donkeymonkey.recyq.R;
-import com.donkeymonkey.recyq.activities.StatsActivity;
-import com.donkeymonkey.recyq.apis.FirebaseAPI;
+import com.donkeymonkey.recyq.activities.MainActivity;
+import com.donkeymonkey.recyq.activities.TutorialActivity;
 import com.donkeymonkey.recyq.model.User;
 import com.facebook.CallbackManager;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -33,8 +35,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-import java.util.concurrent.Executor;
-
 public class SignupFragment extends Fragment {
 
     private static final String TAG = "SignUpFragment";
@@ -46,6 +46,7 @@ public class SignupFragment extends Fragment {
     private static Boolean mIsLoggingOut = false;
     private static Boolean mHasJustLoggedOut = false;
     Boolean mAddedDummyData = false;
+    private static Boolean mIsFacebookUser = false;
 
     private FirebaseAuth mFirebaseAuth;
 
@@ -60,16 +61,10 @@ public class SignupFragment extends Fragment {
     private Spinner mWasteLocationField;
     private Button mRegisterButton;
 
-    private String mFirstName;
-    private String mLastName;
-    private String mAddress;
-    private String mPostcode;
-    private String mCity;
-    private String mPhoneNumber;
-    private String mEmail;
     private String mPassword;
 
-    public static SignupFragment newInstance() {
+    public static SignupFragment newInstance(Boolean isFacebookUser) {
+        mIsFacebookUser = isFacebookUser;
         return new SignupFragment();
     }
 
@@ -98,6 +93,27 @@ public class SignupFragment extends Fragment {
         mWasteLocationField = (Spinner) view.findViewById(R.id.registration_spinner_wasteLocation);
         mRegisterButton = (Button) view.findViewById(R.id.registration_button);
 
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item_waste, getResources().getStringArray(R.array.waste_locations));
+        mWasteLocationField.setPrompt(getResources().getString(R.string.wasteLocation));
+        mWasteLocationField.setAdapter(spinnerAdapter);
+
+        if (mIsFacebookUser) {
+            if (mUser.getName() != null && !mUser.getName().equals("")) mFirstNameField.setText(mUser.getName());
+            if (mUser.getAddedByUser() != null && !mUser.getAddedByUser().equals("")) mEmailField.setText(mUser.getAddedByUser());
+            if (mUser.getLastName() != null && !mUser.getLastName().equals("")) mLastNameField.setText(mUser.getLastName());
+            if (mUser.getAddress() != null && !mUser.getAddress().equals("")) mAddressField.setText(mUser.getAddress());
+            if (mUser.getZipCode() != null && !mUser.getZipCode().equals("")) mFirstNameField.setText(mUser.getZipCode());
+            if (mUser.getCity() != null && !mUser.getCity().equals("")) mCityField.setText(mUser.getCity());
+            if (mUser.getPhoneNumber() != null && !mUser.getPhoneNumber().equals("")) mPhoneNumberField.setText(mUser.getPhoneNumber());
+
+            mPasswordField.setVisibility(View.GONE);
+            mEmailField.setVisibility(View.GONE);
+
+        } else {
+            mPasswordField.setVisibility(View.VISIBLE);
+            mEmailField.setVisibility(View.VISIBLE);
+        }
+
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,6 +126,7 @@ public class SignupFragment extends Fragment {
                     mUser.setCity(mCityField.getText().toString());
                     mUser.setPhoneNumber(mPhoneNumberField.getText().toString());
                     mUser.setAddedByUser(mEmailField.getText().toString());
+                    mUser.setNearestWasteLocation(mWasteLocationField.getSelectedItem().toString());
 
                     //Default values
                     mUser.setAmountOfPlastic(0.0);
@@ -123,17 +140,19 @@ public class SignupFragment extends Fragment {
 
                     mPassword = mPasswordField.getText().toString();
 
-                    createUserWithEmailAndPassword(mUser, mPassword);
-
+                    if (!mIsFacebookUser) {
+                        createUserWithEmailAndPassword(mUser, mPassword);
+                    } else {
+                        setFirebaseUserInfo(mUser, mPassword);
+                    }
                 }
-
             }
         });
 
         return view;
     }
 
-    private void createUserWithEmailAndPassword(User user, final String password) {
+    private void createUserWithEmailAndPassword(final User user, final String password) {
 
         mFirebaseAuth.createUserWithEmailAndPassword(user.getAddedByUser(), password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
             @Override
@@ -144,13 +163,14 @@ public class SignupFragment extends Fragment {
                     FirebaseUser firebaseUser = mFirebaseAuth.getCurrentUser();
 
                     if (firebaseUser != null) {
-                        signInUserWithEmailAndPassword(firebaseUser.getEmail(), password);
+                        user.setUid(firebaseUser.getUid());
+                        setFirebaseUserInfo(user, password);
                     }
 
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                    Toast.makeText(getContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Sign up mislukt", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -170,14 +190,49 @@ public class SignupFragment extends Fragment {
                 } else if (task.isSuccessful()) {
                     Toast.makeText(getActivity(), R.string.sign_in_succesfull, Toast.LENGTH_SHORT).show();
 
-                    User.set();
                     queryOrderedBy("uid", User.getInstance().getUid());
 
-                    Intent intent = StatsActivity.newIntent(getContext());
+                    Intent intent = new Intent(getContext(), TutorialActivity.class);
                     startActivity(intent);
                 }
             }
         });
+
+    }
+
+    private void setFirebaseUserInfo(User user, String password) {
+
+        DatabaseReference mClientsRef = FirebaseDatabase.getInstance().getReference("clients");
+
+        DatabaseReference mUserRef = mClientsRef.child(user.getUid());
+
+        mUserRef.child("addedByUser").setValue(user.getAddedByUser());
+        mUserRef.child("address").setValue(user.getAddress());
+        mUserRef.child("amountOfBioWaste").setValue(0);
+        mUserRef.child("amountOfEWaste").setValue(0);
+        mUserRef.child("amountOfPaper").setValue(0);
+        mUserRef.child("amountOfPlastic").setValue(0);
+        mUserRef.child("amountOfTextile").setValue(0);
+        mUserRef.child("city").setValue(user.getCity());
+        mUserRef.child("completed").setValue(false);
+        mUserRef.child("dateCreated").setValue("");
+        mUserRef.child("didReceiveRecyQBags").setValue(false);
+        mUserRef.child("lastName").setValue(user.getLastName());
+        mUserRef.child("name").setValue(user.getName());
+        mUserRef.child("nearestWasteLocation").setValue(user.getNearestWasteLocation());
+        mUserRef.child("phoneNumber").setValue(user.getPhoneNumber());
+        mUserRef.child("registeredVia").setValue("");
+        mUserRef.child("spentCoins").setValue(0);
+        mUserRef.child("uid").setValue(user.getUid());
+        mUserRef.child("zipCode").setValue(user.getZipCode());
+
+        if (!mIsFacebookUser) {
+            signInUserWithEmailAndPassword(user.getAddedByUser(), password);
+        } else {
+            queryOrderedBy("uid", user.getUid());
+            Intent intent = new Intent(getContext(), TutorialActivity.class);
+            startActivity(intent);
+        }
 
     }
 
@@ -269,6 +324,13 @@ public class SignupFragment extends Fragment {
         }
 
         if (mPasswordField.getText().equals("")) {
+            allFieldsFilledIn = false;
+            mPasswordField.setHintTextColor(ContextCompat.getColor(getContext(), R.color.colorRed));
+        } else {
+            mPasswordField.setHintTextColor(ContextCompat.getColor(getContext(), R.color.colorGreyLight));
+        }
+
+        if (mWasteLocationField.getSelectedItem().toString().equals("") || mWasteLocationField.getSelectedItem().toString().equals(getResources().getString(R.string.wasteLocation))) {
             allFieldsFilledIn = false;
             mPasswordField.setHintTextColor(ContextCompat.getColor(getContext(), R.color.colorRed));
         } else {

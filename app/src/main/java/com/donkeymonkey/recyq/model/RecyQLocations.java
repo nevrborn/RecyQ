@@ -1,6 +1,7 @@
 package com.donkeymonkey.recyq.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RecyQLocations {

@@ -12,17 +12,43 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:padding="10dp"
+            android:elevation="4dp"
             android:background="@color/colorGreyVeryLight"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/recyq_logo"
+                    android:layout_centerInParent="true"/>
+
+                <android.support.design.widget.TabItem
+                    android:id="@+id/action_profile"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/profile_icon"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:clickable="true"
+                    android:foregroundTint="@color/colorGrey"/>
+
+            </RelativeLayout>
+
+            </android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:background="@color/colorBlueLight"
+            android:background="@color/colorGreyVeryLight"
             android:layout_height="@dimen/custom_tab_layout_height"
+            app:tabIndicatorColor="@color/colorGreen"
             app:tabMode="fixed"
             app:tabGravity="fill"/>
     </android.support.design.widget.AppBarLayout>

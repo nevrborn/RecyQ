@@ -2,6 +2,14 @@
     <string name="app_name">RecyQ</string>
     <string name="no_internet">Internet werkt niet</string>
     <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
+    // TABS
+    <string name="tab_stats">Stats</string>
+    <string name="tab_community">Community</string>
+    <string name="tab_shop">Shop</string>
+    <string name="tab_locations">Locations</string>
+    <string name="tab_social">Social</string>
 
     // FIREBASE
     <string name="auth_failed">Authenticatie is mislukt</string>
@@ -9,6 +17,13 @@
     <string name="auth_not_all_fields_filled">Niet alle velden zijn gevuld</string>
     <string name="sign_in_succesfull">Je bent ingelogd!</string>
     <string name="sign_out_succesfull">Je bent uitgelogd!</string>
+
+    // FIREBASE RESET PASSWORD
+    <string name="reset_password_title">Wachtwoord vergeten?</string>
+    <string name="reset_password_text">Voer uw e-mailadres in. U ontvangt hierop een nieuw wachtwoord</string>
+    <string name="reset_password_edittext_hint">Voer uw e-mailadres in</string>
+    <string name="reset_password_ok">Reset wachtwoord</string>
+    <string name="reset_password_cancel">Annuleer</string>
 
     // LOGIN SCREEN
     <string name="login_required">Je moet inloggen</string>
@@ -18,6 +33,45 @@
     <string name="facebook_app_id">1588467261225074</string>
     <string name="fb_login_protocol_scheme">f9b90227af99ae80d2d8e803040d2dbb</string>
 
+    // TUTORIAL SCREEN
+    <string name="tutorial_start">START</string>
+
+    <string name="tutorial_step_1">Stap 1</string>
+    <string name="tutorial_step_2">Stap 2</string>
+    <string name="tutorial_step_3">Stap 3</string>
+    <string name="tutorial_step_4">Klaar</string>
+
+    <string name="tutorial_title_1">Welkom bij RecyQ</string>
+    <string name="tutorial_title_2">Lever je volle tassen in</string>
+    <string name="tutorial_title_3">Verzilver je gespaarde tokens</string>
+    <string name="tutorial_title_4">Red het milieu</string>
+
+    <string name="tutorial_text_1">Je account is geopend. Je kunt nu beginnen met het scheiden van plastic, textiel en papier</string>
+    <string name="tutorial_text_2">Haal een zero waste tas op bij een van de locaties om je afval in te leveren</string>
+    <string name="tutorial_text_3">Voor korting op producten en diensten in de Zero Waste Store en bij ondernemers in de Amsterdamse Poort</string>
+    <string name="tutorial_text_4">Draag bij aan een betere wereld</string>
+
+    <string-array name="tutorial_steps">
+        <item>Stap 1</item>
+        <item>Stap 2</item>
+        <item>Stap 3</item>
+        <item>Klaar</item>
+    </string-array>
+
+    <string-array name="tutorial_titles">
+        <item>Welkom bij RecyQ</item>
+        <item>Lever je volle tassen in</item>
+        <item>Verzilver je gespaarde tokens</item>
+        <item>Red het milieu</item>
+    </string-array>
+
+    <string-array name="tutorial_texts">
+        <item>Je account is geopend. Je kunt nu beginnen met het scheiden van plastic, textiel en papier</item>
+        <item>Haal een zero waste tas op bij een van de locaties om je afval in te leveren</item>
+        <item>Voor korting op producten en diensten in de Zero Waste Store en bij ondernemers in de Amsterdamse Poort</item>
+        <item>Draag bij aan een betere wereld</item>
+    </string-array>
+
     // REGISTRATION SCREEN
     <string name="name">Voornaam</string>
     <string name="lastName">Achternaam</string>
@@ -25,9 +79,17 @@
     <string name="postcode">Postcode</string>
     <string name="city">Woonplaats</string>
     <string name="phonenumber">Telefoonnummer</string>
-    <string name="addedByUser">E-mailadres</string>
+    <string name="addedByUser" translatable="false">E-mailadres</string>
     <string name="password">Wachtwoord</string>
     <string name="wasteLocation">Selecteer een locatie</string>
+    <string-array name="waste_locations">
+        <item>Selecteer een locatie</item>
+        <item>A\'damse Poort</item>
+        <item>H-Buurt</item>
+        <item>Holendrecht</item>
+        <item>Venserpolder</item>
+    </string-array>
+
 
     // STATS SCREEN
     <string name="stats_recycled">recycled > %1$.1f KG</string>
@@ -112,6 +174,29 @@
         <item>Youtube</item>
         <item>Facebook</item>
     </string-array>
+
+    // PROFILE SCREEN
+    <string name="profile_title">PROFILE</string>
+    <string name="profile_logout">Log uit</string>
+    <string name="profile_add_photo_title">Voeg foto toe</string>
+    <string name="profile_take_photo">Maak Foto</string>
+    <string name="profile_photo_gallery">Fotogalerij</string>
+    <string name="profile_no_coupons">U heeft nog geen coupons verdiend.</string>
+    <string name="profile_coupons">Uw verdiende coupons:</string>
+    <string name="profile_coupons_redeemed">Redeemed</string>
+    <string name="profile_coupons_not_redeemed">Redeem</string>
+    <string name="profile_coupons_donation_title">Bedankt voor uw donatie.</string>
+    <string name="profile_coupons_donation_text">Houd de Community pagina in de gaten om te zien wat er georganiseerd wordt.</string>
+    <string name="profile_coupons_redeem_title">Validatie vereist.</string>
+    <string name="profile_coupons_redeem_text">Vraag de winkel eigenaar om zijn validatie code in te voeren.</string>
+    <string name="profile_coupons_redeem_error_title">Fout</string>
+    <string name="profile_coupons_redeem_error_text">De ingevoerde code is niet correct.</string>
+    <string name="profile_coupons_redeem_success_title">Bedankt!</string>
+    <string name="profile_coupons_redeem_success_text">Het valideren van uw coupon is gelukt.</string>
+    <string name="profile_coupons_redeem_enter_code">Voer hier de validatie code in.</string>
+    <string name="profile_coupons_already_redeemed">Coupon is al redeemed</string>
+    <string name="profile_logout_title">Log uit</string>
+    <string name="profile_logout_text">Ben je zeker dat je wil uitloggen?</string>
 
 
 </resources>

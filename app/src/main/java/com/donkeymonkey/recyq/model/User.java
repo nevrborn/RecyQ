@@ -1,9 +1,12 @@
 package com.donkeymonkey.recyq.model;
 
+import android.net.Uri;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class User{
 
@@ -18,6 +21,7 @@ public class User{
     private String phoneNumber;
     private String addedByUser;
     private String nearestWasteLocation;
+    private Boolean didReceiveRecyQBags;
 
     private Double amountOfPlastic;
     private Double amountOfPaper;
@@ -26,13 +30,21 @@ public class User{
     private Double amountOfBioWaste;
     private Double amountOfGlass;
 
-    //private HashMap<String, String> wasteDepositInfo;
+    private String registeredVia;
+    private String dateCreated;
     private Boolean completed;
     private String uid;
-    private Integer spentCoins;
+    private int spentCoins;
+
+    //private List<WasteDepositInfo> wasteDepositInfo;
+
     private boolean userIsLoggedIn;
     private int tokens;
     private int treesSaved;
+
+    private Uri mPhotoPath;
+
+    private boolean isLoggingOut;
 
     private User() {
 
@@ -57,6 +69,10 @@ public class User{
 
     public static void setInstance(User user) {
         mUser = user;
+    }
+
+    public void clearUser() {
+        mUser = null;
     }
 
     public static void set() {
@@ -275,15 +291,14 @@ public class User{
         this.amountOfGlass = amountOfGlass;
     }
 
-//    public HashMap<String, String> getWasteDepositInfo() {
+//    public List<WasteDepositInfo> getWasteDepositInfo() {
 //        return wasteDepositInfo;
 //    }
 //
-//    public void setWasteDepositInfo(HashMap<String, String> wasteDepositInfo) {
+//    public void setWasteDepositInfo(List<WasteDepositInfo> wasteDepositInfo) {
 //        this.wasteDepositInfo = wasteDepositInfo;
 //    }
 
-    
     public Boolean getCompleted() {
         return completed;
     }
@@ -359,7 +374,7 @@ public class User{
     public int getTokens() {
         int tokens = 0;
 
-        if (getTotalKgRecycled() != null) {
+        if (getTotalKgRecycled() != null && getSpentCoins() != null) {
             tokens = (int) Math.round(getTotalKgRecycled() / 35);
             tokens = tokens - getSpentCoins();
             return tokens;
@@ -381,11 +396,73 @@ public class User{
     }
 
     public float getRemainingCO2ToSaveOneTree() {
-        return (float) (100 / (getTotalCo2Saved() % 16.6));
+        if (getTotalCo2Saved() != 0) {
+            return (float) (100 / (getTotalCo2Saved() % 16.6));
+        } else {
+            return 0;
+        }
+
     }
 
     public float getRemainingKGToEarnOneToken() {
-        return (float) (100 / (getTokens() % 35));
+        if (getTokens() != 0) {
+            return (float) (100 / (getTokens() % 35));
+        } else {
+            return 0;
+        }
+
     }
 
+    public Uri getPhotoPath() {
+        return mPhotoPath;
+    }
+
+    public void setPhotoPath(Uri photoPath) {
+        mPhotoPath = photoPath;
+    }
+
+    public boolean isLoggingOut() {
+        return isLoggingOut;
+    }
+
+    public void setLoggingOut(boolean loggingOut) {
+        isLoggingOut = loggingOut;
+    }
+
+    public Boolean getDidReceiveRecyQBags() {
+        return didReceiveRecyQBags;
+    }
+
+    public void setDidReceiveRecyQBags(Boolean didReceiveRecyQBags) {
+        this.didReceiveRecyQBags = didReceiveRecyQBags;
+    }
+
+    public String getRegisteredVia() {
+        return registeredVia;
+    }
+
+    public void setRegisteredVia(String registeredVia) {
+        this.registeredVia = registeredVia;
+    }
+
+    public String getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(String dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+//    public String getFullName() {
+//        String firstName = "";
+//        String lastName = "";
+//
+//        if (getName() != null) firstName = getName().toString();
+//        if (getLastName() != null) lastName = getLastName().toString();
+//
+//        if (firstName.length() != 0) firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1).toLowerCase();
+//        if (lastName.length() != 0) lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1).toLowerCase();
+//
+//        return firstName + " " + lastName;
+//    }
 }

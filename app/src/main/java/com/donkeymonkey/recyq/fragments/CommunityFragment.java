@@ -1,7 +1,6 @@
 package com.donkeymonkey.recyq.fragments;
 
 import android.app.FragmentManager;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,14 +12,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.donkeymonkey.recyq.R;
-import com.donkeymonkey.recyq.activities.LeaderboardActivity;
-import com.donkeymonkey.recyq.activities.PartnersActivity;
 import com.donkeymonkey.recyq.dialogs.DialogLeaderboard;
 import com.donkeymonkey.recyq.dialogs.DialogPartners;
-import com.donkeymonkey.recyq.dialogs.DialogPickUp;
 import com.donkeymonkey.recyq.dialogs.DialogProjects;
 import com.donkeymonkey.recyq.model.Community;
-import com.donkeymonkey.recyq.model.User;
 
 public class CommunityFragment extends Fragment {
 

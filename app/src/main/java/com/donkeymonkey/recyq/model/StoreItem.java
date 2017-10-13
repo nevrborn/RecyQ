@@ -11,6 +11,7 @@ public class StoreItem {
     private String detailDescription;
     private int tokenAmount;
     private String imageString;
+    private int validationCode;
 
     public StoreItem() {
 
@@ -62,5 +63,13 @@ public class StoreItem {
 
     public void setImageString(String imageString) {
         this.imageString = imageString;
+    }
+
+    public int getValidationCode() {
+        return validationCode;
+    }
+
+    public void setValidationCode(int validationCode) {
+        this.validationCode = validationCode;
     }
 }

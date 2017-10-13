@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/profile_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="fitCenter"
+        android:padding="50dp"
+        android:src="@drawable/camera_icon"
+        android:background="@color/colorBlueDark"/>
+
+    <TextView
+        android:id="@+id/profile_textview_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/profile_textview_coupons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/profile_coupons"
+        android:textAlignment="center"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/profile_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

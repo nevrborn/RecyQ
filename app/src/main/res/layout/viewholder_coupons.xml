@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_weight="1">
+
+    <TextView
+        android:id="@+id/coupon_textview_coupon_name"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.8"
+        android:scaleType="fitXY"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_vertical"
+        android:text="@string/profile_coupons"/>
+
+    <TextView
+        android:id="@+id/coupon_textview_redeemed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3"
+        android:text="@string/profile_coupons_not_redeemed"
+        android:textColor="@color/colorRedDark"
+        android:gravity="center"
+        android:padding="3dp"
+        android:textSize="12sp"/>
+
+</LinearLayout>
