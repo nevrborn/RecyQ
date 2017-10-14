@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.os.Build;
 import android.support.design.widget.TabItem;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -70,6 +73,9 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     };
     private TabItem mProfileTab;
 
+    private List<ImageView> mIconList = new ArrayList<>();
+    private List<TextView> mTitleList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +99,23 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                changeIconColor(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
         mProfileTab = (TabItem) findViewById(R.id.action_profile);
 
         setupTabIcons();
@@ -109,6 +132,20 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         });
 
         checkForUpdates();
+
+    }
+
+    public void changeIconColor(int position) {
+
+        for (int j = 0; j < mIconList.size(); j++) {
+            if (j == position) {
+                mIconList.get(j).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.colorGreen), PorterDuff.Mode.SRC_IN);
+                mTitleList.get(j).setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorGreen));
+            } else {
+                mIconList.get(j).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.colorGrey), PorterDuff.Mode.SRC_IN);
+                mTitleList.get(j).setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorGrey));
+            }
+        }
 
     }
 
@@ -169,12 +206,35 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         LinearLayout tabLocations = (LinearLayout)   headerView.findViewById(R.id.tab_locations);
         LinearLayout tabSocial = (LinearLayout)   headerView.findViewById(R.id.tab_social);
 
+        ImageView iconStats = (ImageView) tabStats.findViewById(R.id.tab_stats_icon);
+        ImageView iconCommunity = (ImageView) tabCommunity.findViewById(R.id.tab_community_icon);
+        ImageView iconShop = (ImageView) tabShop.findViewById(R.id.tab_shop_icon);
+        ImageView iconLocations = (ImageView) tabLocations.findViewById(R.id.tab_locations_icon);
+        ImageView iconSocial = (ImageView) tabSocial.findViewById(R.id.tab_social_icon);
+
+        TextView titleStats = (TextView) tabStats.findViewById(R.id.tab_stats_title);
+        TextView titleCommunity = (TextView) tabCommunity.findViewById(R.id.tab_community_title);
+        TextView titleShop = (TextView) tabShop.findViewById(R.id.tab_shop_title);
+        TextView titleLocations = (TextView) tabLocations.findViewById(R.id.tab_locations_title);
+        TextView titleSocial = (TextView) tabSocial.findViewById(R.id.tab_social_title);
+
+        mIconList.add(iconStats);
+        mIconList.add(iconCommunity);
+        mIconList.add(iconShop);
+        mIconList.add(iconLocations);
+        mIconList.add(iconSocial);
+
+        mTitleList.add(titleStats);
+        mTitleList.add(titleCommunity);
+        mTitleList.add(titleShop);
+        mTitleList.add(titleLocations);
+        mTitleList.add(titleSocial);
+
         tabLayout.getTabAt(0).setCustomView(tabStats);
         tabLayout.getTabAt(1).setCustomView(tabCommunity);
         tabLayout.getTabAt(2).setCustomView(tabShop);
         tabLayout.getTabAt(3).setCustomView(tabLocations);
         tabLayout.getTabAt(4).setCustomView(tabSocial);
-
 
     }
 
@@ -224,6 +284,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+
     }
 
 

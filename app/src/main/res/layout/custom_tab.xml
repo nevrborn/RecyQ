@@ -16,16 +16,18 @@
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/tab_stats_icon"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:src="@drawable/stats_icon"
             android:padding="3dp"
-            android:tint="@color/colorGrey"/>
+            android:tint="@color/colorGreen"/>
 
         <TextView
+            android:id="@+id/tab_stats_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorGrey"
+            android:textColor="@color/colorGreen"
             android:text="@string/tab_stats"
             android:textSize="9sp"
             android:gravity="center"/>
@@ -40,6 +42,7 @@
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/tab_community_icon"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:src="@drawable/community_icon"
@@ -47,6 +50,7 @@
             android:tint="@color/colorGrey"/>
 
         <TextView
+            android:id="@+id/tab_community_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorGrey"
@@ -64,6 +68,7 @@
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/tab_shop_icon"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:src="@drawable/store_icon"
@@ -71,6 +76,7 @@
             android:tint="@color/colorGrey"/>
 
         <TextView
+            android:id="@+id/tab_shop_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorGrey"
@@ -88,6 +94,7 @@
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/tab_locations_icon"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:src="@drawable/location_icon2"
@@ -95,6 +102,7 @@
             android:tint="@color/colorGrey"/>
 
         <TextView
+            android:id="@+id/tab_locations_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorGrey"
@@ -112,6 +120,7 @@
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/tab_social_icon"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:src="@drawable/social_icon2"
@@ -119,6 +128,7 @@
             android:tint="@color/colorGrey"/>
 
         <TextView
+            android:id="@+id/tab_social_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorGrey"
