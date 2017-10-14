@@ -53,6 +53,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,6 +63,8 @@ import java.util.Collections;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
+
+    private AVLoadingIndicatorView mLoadingIndicator;
 
     private User mUser;
     private StoreItems mStoreItems;
@@ -100,12 +103,15 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_login);
 
         // Setting up the different view elements
+        mLoadingIndicator = (AVLoadingIndicatorView) findViewById(R.id.login_loading_indicator);
         final EditText emailEditText = (EditText) findViewById(R.id.login_edittext_email);
         final EditText passwordEditText = (EditText) findViewById(R.id.login_edittext_password);
         Button loginButton = (Button) findViewById(R.id.login_button);
         mFacebookLoginButton = (LoginButton) findViewById(R.id.facebook_login_button);
         Button registerUserButton = (Button) findViewById(R.id.login_register_button);
         Button resetPasswordButton = (Button) findViewById(R.id.login_reset_password_button);
+
+        mLoadingIndicator.hide();
 
         mUser = User.getInstance();
         mStoreItems = StoreItems.getInstance();
@@ -165,6 +171,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (!String.valueOf(emailEditText.getText()).equals("") && !String.valueOf(passwordEditText.getText()).equals("")) {
 
+                    mLoadingIndicator.show();
+
                     mMail = emailEditText.getText().toString();
                     mPassword = passwordEditText.getText().toString();
 
@@ -185,6 +193,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                         } else {
                                             // If sign in fails, display a message to the user.
+                                            mLoadingIndicator.hide();
                                             Log.w(TAG, "signInWithEmail:failed", task.getException());
                                             Toast.makeText(LoginActivity.this, R.string.auth_failed, Toast.LENGTH_SHORT).show();
                                         }
@@ -361,6 +370,8 @@ public class LoginActivity extends AppCompatActivity {
                         isUserInFirebase = true;
                     }
                 }
+
+                mLoadingIndicator.hide();
 
                 if (isUserInFirebase) {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);

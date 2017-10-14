@@ -1,55 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/white"
                 android:weightSum="1">
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/facebook_login_button"
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/login_loading_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="30dp"/>
+        app:indicatorName="BallPulseIndicator"
+        android:layout_centerInParent="true"
+        app:indicatorColor="@color/colorGrey"
+        />
 
-    <ImageView
-        android:layout_gravity="center"
-        android:layout_width="400dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="50dp"
-        android:src="@drawable/recyq_icon_green"
-        android:layout_weight="0.7"/>
-    
-    <EditText
-        android:id="@+id/login_edittext_email"
-        android:inputType="textEmailAddress"
-        style="@style/editText_grey"
-        android:hint="@string/addedByUser"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:weightSum="1"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/login_edittext_password"
-        android:inputType="textPassword"
-        style="@style/editText_grey"
-        android:hint="@string/password"/>
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/facebook_login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="30dp"/>
 
-    <Button
-        android:id="@+id/login_button"
-        style="@style/button_borderless"
-        android:text="@string/login"/>
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="400dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/recyq_icon_green"
+            android:layout_weight="0.7"/>
 
-    <Button
-        android:id="@+id/login_register_button"
-        style="@style/button_borderless"
-        android:textColor="@color/colorGreen"
-        android:text="@string/registerButton"/>
+        <EditText
+            android:id="@+id/login_edittext_email"
+            android:inputType="textEmailAddress"
+            style="@style/editText_grey"
+            android:hint="@string/addedByUser"/>
 
-    <Button
-        android:id="@+id/login_reset_password_button"
-        style="@style/button_borderless"
-        android:text="@string/forgotPassword"/>
+        <EditText
+            android:id="@+id/login_edittext_password"
+            android:inputType="textPassword"
+            style="@style/editText_grey"
+            android:hint="@string/password"/>
+
+        <Button
+            android:id="@+id/login_button"
+            style="@style/button_borderless"
+            android:text="@string/login"/>
+
+        <Button
+            android:id="@+id/login_register_button"
+            style="@style/button_borderless"
+            android:textColor="@color/colorGreen"
+            android:text="@string/registerButton"/>
+
+        <Button
+            android:id="@+id/login_reset_password_button"
+            style="@style/button_borderless"
+            android:text="@string/forgotPassword"/>
+
+    </LinearLayout>
 
 
 
-</LinearLayout>
+
+</RelativeLayout>
