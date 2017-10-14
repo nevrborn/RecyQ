@@ -3,6 +3,7 @@ package com.donkeymonkey.recyq.dialogs;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.donkeymonkey.recyq.R;
@@ -141,7 +143,12 @@ public class DialogPartners extends DialogFragment {
 
         @Override
         public void onClick(View view) {
-
+            if (!mPartner.getPartnerUrl().equals("")) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mPartner.getPartnerUrl()));
+                startActivity(browserIntent);
+            } else {
+                Toast.makeText(getActivity(), getResources().getString(R.string.partner_no_website), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

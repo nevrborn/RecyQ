@@ -156,6 +156,8 @@
 
     // PARTNERS SCREEN
     <string name="partner_title">PARTNERS</string>
+    <string name="partner_no_website">Sorry, geen website voor deze partner</string>
+
 
     // PROJECTS SCREEN
     <string name="projects_title">WAT GAAN WE DOEN?</string>

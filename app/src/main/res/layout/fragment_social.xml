@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
@@ -12,6 +12,7 @@
             app:values="@array/social_buttons"
             app:mstbPrimaryColor="@color/colorGrey"
             app:mstbSecondaryColor="@color/colorGreyVeryLight"
+            android:layout_alignParentTop="true"
             android:layout_margin="20dp"
             >
 
@@ -20,9 +21,18 @@
     <WebView
         android:id="@+id/social_webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:layout_below="@id/social_toggle">
 
     </WebView>
 
-</LinearLayout>
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/social_loading_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:indicatorName="BallPulseIndicator"
+        android:layout_centerInParent="true"
+        app:indicatorColor="@color/colorGrey"
+        />
+
+</RelativeLayout>
