@@ -48,4 +48,8 @@ public class Leaderboard {
     public void addLeaderBoardEntry(LeaderboardEntry leaderboardEntry) {
         mLeaderBoardList.add(leaderboardEntry);
     }
+
+    public void clearLeaderBoard() {
+        mLeaderBoardList.clear();
+    }
 }

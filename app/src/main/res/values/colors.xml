@@ -17,5 +17,6 @@
     <color name="colorBlueDark">#627E8B</color>
     <color name="colorOrange">#FF6900</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorTransparent">#00ffffff</color>
 
 </resources>

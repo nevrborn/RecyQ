@@ -542,6 +542,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public void getCommunityDataFromFirebase() {
 
+        mLeaderboard.clearLeaderBoard();
+
         mClientsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

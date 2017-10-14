@@ -76,8 +76,8 @@ public class TutorialFragment extends Fragment {
 
         mColorArray.add(ContextCompat.getColor(getContext(), R.color.colorGreen));
         mColorArray.add(ContextCompat.getColor(getContext(), R.color.colorBlue));
-        mColorArray.add(ContextCompat.getColor(getContext(), R.color.colorYellow));
         mColorArray.add(ContextCompat.getColor(getContext(), R.color.colorRed));
+        mColorArray.add(ContextCompat.getColor(getContext(), R.color.colorYellow));
 
         // Setting fonts
         pt_mono_font = Typeface.createFromAsset(getContext().getAssets(), "fonts/pt_mono.ttf");
